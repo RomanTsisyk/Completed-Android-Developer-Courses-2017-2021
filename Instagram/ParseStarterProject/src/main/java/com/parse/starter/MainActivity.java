@@ -8,6 +8,7 @@
  */
 package com.parse.starter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -43,6 +44,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView changeSignupModeTextView;
 
     EditText passwordEditText;
+
+    public void showUserList() {
+
+        Intent intent = new Intent(getApplicationContext(), UserListActivity.class);
+        startActivity(intent);
+
+    }
 
     @Override
     public boolean onKey(View view, int i, KeyEvent keyEvent) {
@@ -113,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             Log.i("Signup", "Successful");
 
+                            showUserList();
+
                         } else {
 
                             Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -130,6 +140,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (user != null) {
 
                             Log.i("Signup", "Login successful");
+
+                            showUserList();
 
                         } else {
 
@@ -168,6 +180,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       passwordEditText = (EditText) findViewById(R.id.passwordEditText);
 
       passwordEditText.setOnKeyListener(this);
+
+      if (ParseUser.getCurrentUser() != null) {
+
+          showUserList();
+
+      }
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
   }
