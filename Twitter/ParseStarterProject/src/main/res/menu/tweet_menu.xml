@@ -3,6 +3,10 @@
 
     <item android:id="@+id/tweet" android:title="Tweet" />
 
+    <item android:id="@+id/viewFeed" android:title="Your Feed" />
+
     <item android:id="@+id/logout" android:title="Logout" />
+
+
 
 </menu>
