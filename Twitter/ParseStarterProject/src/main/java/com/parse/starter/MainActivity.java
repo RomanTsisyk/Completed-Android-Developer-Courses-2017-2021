@@ -39,6 +39,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity  {
 
+  public void redirectUser() {
+
+      if (ParseUser.getCurrentUser() != null) {
+
+          Intent intent = new Intent(getApplicationContext(), Main2Activity.class);
+
+          startActivity(intent);
+
+      }
+
+  }
+
     public void signupLogin(View view) {
 
         final EditText usernameEditText = (EditText) findViewById(R.id.usernameEditText);
@@ -52,6 +64,8 @@ public class MainActivity extends AppCompatActivity  {
                 if (e == null) {
 
                     Log.i("Info", "Logged in");
+
+                    redirectUser();
 
                 } else {
 
@@ -68,6 +82,8 @@ public class MainActivity extends AppCompatActivity  {
                             if (e == null) {
 
                                 Log.i("Info", "Signed up");
+
+                                redirectUser();
 
                             } else {
 
@@ -92,6 +108,8 @@ public class MainActivity extends AppCompatActivity  {
     setContentView(R.layout.activity_main);
 
     setTitle("Twitter: Login");
+
+      redirectUser();
 
     ParseAnalytics.trackAppOpenedInBackground(getIntent());
   }
