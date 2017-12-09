@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Accelometer Sensor.iml" filepath="$PROJECT_DIR$/Accelometer Sensor.iml" />
+      <module fileurl="file://C:\App\Udemy\The Complete Android Kotlin Developer Course\Accelometer Sensor\StartUp.iml" filepath="C:\App\Udemy\The Complete Android Kotlin Developer Course\Accelometer Sensor\StartUp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\App\Udemy\The Complete Android Kotlin Developer Course\Accelometer Sensor\app\app.iml" filepath="C:\App\Udemy\The Complete Android Kotlin Developer Course\Accelometer Sensor\app\app.iml" />
+    </modules>
+  </component>
+</project>
