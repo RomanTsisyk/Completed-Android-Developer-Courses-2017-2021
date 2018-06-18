@@ -33,14 +33,18 @@ package com.raywenderlich.android.tflclassifier
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.FileNotFoundException
+import java.io.IOException
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,6 +54,19 @@ class MainActivity : AppCompatActivity() {
 
   internal lateinit var backgroundThread: HandlerThread
   internal lateinit var backgroundHandler: Handler
+
+  private lateinit var classifier: ImageClassifier
+
+  private val periodicClassify = object : Runnable {
+    override fun run() {
+      synchronized(lock) {
+        if (runClassifier) {
+          classifyImage()
+        }
+      }
+      backgroundHandler.post(this)
+    }
+  }
 
   companion object {
     private const val TAG = "MainActivity"
@@ -69,12 +86,18 @@ class MainActivity : AppCompatActivity() {
       startActivityForResult(photoPickerIntent, RESULT_PICK_IMAGE)
     }
 
+    try {
+      classifier = ImageClassifierQuantizedMobileNet(this)
+    } catch (e: IOException) {
+      Log.e(TAG, "Failed to initialize an image classifier.")
+    }
+
     startBackgroundThread()
   }
 
   override fun onDestroy() {
     stopBackgroundThread()
-
+    classifier.close()
     super.onDestroy()
   }
 
@@ -87,6 +110,7 @@ class MainActivity : AppCompatActivity() {
         val imageStream = contentResolver.openInputStream(imageUri)
         val selectedImage = BitmapFactory.decodeStream(imageStream)
         imageView.setImageBitmap(selectedImage)
+        backgroundHandler.post(periodicClassify)
       } catch (e: FileNotFoundException) {
         e.printStackTrace()
         Toast.makeText(this, getString(R.string.error_picking), Toast.LENGTH_SHORT).show()
@@ -95,5 +119,13 @@ class MainActivity : AppCompatActivity() {
     } else {
       Toast.makeText(this, getString(R.string.no_pick), Toast.LENGTH_SHORT).show()
     }
+  }
+
+  private fun classifyImage() {
+    val unscaledBitmap = (imageView.drawable as BitmapDrawable).bitmap
+    val bitmap = Bitmap.createScaledBitmap(unscaledBitmap, classifier.imageSizeX, classifier.imageSizeY, false)
+    val textToShow = classifier.classifyFrame(bitmap)
+    bitmap.recycle()
+    runOnUiThread { resultTextView.text = textToShow }
   }
 }
