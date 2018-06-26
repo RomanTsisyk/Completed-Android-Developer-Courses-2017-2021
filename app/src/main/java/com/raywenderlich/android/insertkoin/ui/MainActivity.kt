@@ -43,11 +43,12 @@ import com.raywenderlich.android.insertkoin.model.RepoEmpty
 import com.raywenderlich.android.insertkoin.model.RepoError
 import com.raywenderlich.android.insertkoin.model.RepoResult
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.architecture.ext.viewModel
 
 
 class MainActivity : AppCompatActivity() {
 
-  private val mainViewModel: MainViewModel? = null
+  private val mainViewModel: MainViewModel by viewModel()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
     reposRecyclerView.layoutManager = LinearLayoutManager(this)
 
-    mainViewModel?.getRepoLiveData()?.observe(this, Observer<RepoResult> { result ->
+    mainViewModel.getRepoLiveData().observe(this, Observer<RepoResult> { result ->
       when (result) {
         is RepoData -> {
           val adapter = RepoAdapter(result.repos.sortedBy { it.name })
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     })
 
     fetchRepos.setOnClickListener {
-      mainViewModel?.getRepos(orgName.text.toString())
+      mainViewModel.getRepos(orgName.text.toString())
       fetchRepos.hideKeyboard()
       showLoading()
     }
