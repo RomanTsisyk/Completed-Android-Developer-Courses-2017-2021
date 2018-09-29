@@ -24,16 +24,13 @@ class ConverterActivity : AppCompatActivity() {
 
         convert.setOnClickListener {
             val low = currencyFromSelection()
-            val high = currencyFromSelection()
 
             low.amount = lowAmount.text.toString().toDouble()
-            high.amount = highAmount.text.toString().toDouble()
 
             lowAmount.text.toString().toDouble()
-            highAmount.text.toString().toDouble()
 
             lowAmountInDollars.text = String.format("$%.2f", low.totalValueInDollars())
-            highAmountInDollars.text = String.format("$%.2f", high.totalValueInDollars())        }
+        }
     }
 
 
