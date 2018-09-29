@@ -1,11 +1,14 @@
 package tsisyk.app.proteincalculator
 
 import android.animation.ValueAnimator
+import android.graphics.ImageDecoder
+import android.graphics.drawable.AnimatedImageDrawable
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_converter.*
 import android.widget.TextView
+import java.io.IOException
 
 
 class ConverterActivity : AppCompatActivity() {
@@ -40,6 +43,17 @@ class ConverterActivity : AppCompatActivity() {
         animator.addUpdateListener { animation -> view.translationX = animation.animatedValue as Float }
         animator.repeatCount = 5
         animator.start()
+
+        decodeImage()
+    }
+
+    @Throws(IOException::class)
+    private fun decodeImage() {
+        val decodedAnimation = ImageDecoder.decodeDrawable(
+                ImageDecoder.createSource(resources, R.drawable.fitball))
+
+        // Prior to start(), the first frame is displayed.
+        (decodedAnimation as? AnimatedImageDrawable)?.start()
     }
 
     private fun currencyFromSelection() =
