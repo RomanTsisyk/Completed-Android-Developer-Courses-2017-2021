@@ -1,16 +1,16 @@
-package com.raywenderlich.android.currency
+package tsisyk.app.proteincalculator
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import com.raywenderlich.android.currency.R
 import kotlinx.android.synthetic.main.activity_converter.*
-import java.security.CryptoPrimitive
 
 
 class ConverterActivity : AppCompatActivity() {
 
     companion object {
-        private val currencies = listOf(Dollar(), Euro(), Crypto())
+        private val food = listOf(Eggs(), Sausage(), Cheese())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,27 +18,27 @@ class ConverterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_converter)
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,
-                currencies.map { it.name })
+                food.map { it.name })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        currency.adapter = adapter
+        foodSpinner.adapter = adapter
 
         convert.setOnClickListener {
-            val low = currencyFromSelection()
+            val result = currencyFromSelection()
 
-            low.amount = lowAmount.text.toString().toDouble()
+            result.amount = resultAmount.text.toString().toDouble()
 
-            lowAmount.text.toString().toDouble()
+            resultAmount.text.toString().toDouble()
 
-            lowAmountInDollars.text = String.format("$%.2f", low.totalValueInDollars())
+            proteinValue.text = String.format("$%.2f", result.totalProteinValue())
         }
     }
 
 
     fun currencyFromSelection() =
-            when (currencies[currency.selectedItemPosition]) {
-                is Dollar -> Dollar()
-                is Euro -> Euro()
-                is Crypto -> Crypto()
+            when (food[foodSpinner.selectedItemPosition]) {
+                is Eggs -> Eggs()
+                is Sausage -> Sausage()
+                is Cheese -> Cheese()
 
             }
 }

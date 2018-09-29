@@ -4,10 +4,10 @@
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".ConverterActivity">
+  tools:context="tsisyk.app.proteincalculator.ConverterActivity">
 
   <EditText
-      android:id="@+id/lowAmount"
+      android:id="@+id/resultAmount"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
@@ -19,10 +19,10 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/currency" />
+      app:layout_constraintTop_toBottomOf="@+id/foodSpinner" />
 
   <Spinner
-      android:id="@+id/currency"
+      android:id="@+id/foodSpinner"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
       android:layout_margin="8dp"
@@ -44,7 +44,7 @@
       app:layout_constraintStart_toStartOf="parent" />
 
   <TextView
-      android:id="@+id/lowAmountInDollars"
+      android:id="@+id/proteinValue"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="8dp"
