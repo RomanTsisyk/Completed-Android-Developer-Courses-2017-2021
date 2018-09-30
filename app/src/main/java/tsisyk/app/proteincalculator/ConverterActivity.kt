@@ -3,7 +3,6 @@ package tsisyk.app.proteincalculator
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
-import com.raywenderlich.android.currency.R
 import kotlinx.android.synthetic.main.activity_converter.*
 
 
