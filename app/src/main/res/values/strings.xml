@@ -1,5 +1,8 @@
 <resources>
   <string name="app_name">Protein Calculator</string>
-  <string name="click">Check it for me, please</string>
+  <string name="calculation">Calculation</string>
+  <string name="rate_us">Rate this app</string>
+  <string name="ok">Yes, please</string>
+  <string name="no">Nope, thanks</string>
 
 </resources>
