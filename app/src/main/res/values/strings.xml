@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Greetings</string>
+  <string name="language_label">Language:</string>
+  <string name="formal">Formal</string>
+  <string name="informal">Informal</string>
+  <string name="enter_a_name">Enter a name</string>
+  <string name="show_greeting">Show Greeting</string>
+</resources>
