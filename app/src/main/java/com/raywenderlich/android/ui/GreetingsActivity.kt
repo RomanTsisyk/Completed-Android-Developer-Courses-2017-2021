@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.activity_greetings.*
 
 class GreetingsActivity : AppCompatActivity() {
 
-    private var viewModel = GreetingsViewModel()
+    private var viewModel = GreetingsViewModel(application)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +82,6 @@ class GreetingsActivity : AppCompatActivity() {
     private fun configureGreeting() {
 
         greeting.text = viewModel.greeting()
-        count.text = resources.getQuantityString(R.plurals.greetings, viewModel.greetingCount, viewModel.greetingCount)
+        count.text = viewModel.countText()
     }
 }
