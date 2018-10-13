@@ -10,8 +10,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-internal typealias ReposCallback = (repos: List<Repo>) -> Unit
-internal typealias GistsCallback = (gists: List<Gist>) -> Unit
 
 @Throws(IOException::class)
 internal fun getUrlAsString(urlAddress: String): String {
