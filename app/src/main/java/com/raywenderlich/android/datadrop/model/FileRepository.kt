@@ -19,7 +19,13 @@ object FileRepository : DropRepository {
 
     private fun getContext() = DataDropApplication.getAppContext()
 
-    private fun dropsDirectory() = getContext().getDir("drops", Context.MODE_PRIVATE)
+    private fun dropsDirectory(): File {
+        val dropsDirectory = File(getContext().getExternalFilesDir(null), "drops")
+        if (!dropsDirectory.exists()) {
+            dropsDirectory.mkdir()
+        }
+        return dropsDirectory
+    }
 
     private fun dropFile(filename: String) = File(dropsDirectory(), filename)
 
@@ -62,11 +68,17 @@ object FileRepository : DropRepository {
     }
 
     override fun clearDrop(drop: Drop) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dropFile(dropFilename(drop)).delete()
     }
 
     override fun clearAllDrops() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        try {
+            val fileList = dropsDirectory().list()
+            fileList.map { dropFile(it).delete() }
+            dropsDirectory().delete()
+        } catch (e: IOException) {
+            Log.e("FileRepository", "Error clearing all drops")
+        }
     }
 
     private fun convertStreamtoString(inputStream: InputStream): String {
