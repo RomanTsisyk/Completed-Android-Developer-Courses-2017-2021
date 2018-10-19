@@ -33,9 +33,21 @@ package com.raywenderlich.android.datadrop.ui.map
 
 import com.raywenderlich.android.datadrop.model.Drop
 import com.raywenderlich.android.datadrop.model.DropRepository
+import com.raywenderlich.android.datadrop.model.MapPrefs
 
 
 class MapPresenter(private val repo: DropRepository, private val view: MapContract.View) : MapContract.Presenter {
+  override fun saveMapType(mapType: String) {
+    MapPrefs.saveMapType(mapType)
+  }
+
+  override fun getMapType(): String = MapPrefs.getMapType()
+
+  override fun saveMarketColor(marketColor: String) {
+    MapPrefs.saveMarketColor(marketColor)
+  }
+
+  override fun getMarcketColor(): String = MapPrefs.getMarketColor()
 
   override fun start() {
     view.showDrops(getDrops())

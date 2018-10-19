@@ -37,14 +37,18 @@ import com.raywenderlich.android.datadrop.ui.base.BaseView
 
 
 interface MapContract {
-  interface View : BaseView<Presenter> {
-    fun showDrop(drop: Drop)
-    fun showDrops(drops: List<Drop>)
-  }
+    interface View : BaseView<Presenter> {
+        fun showDrop(drop: Drop)
+        fun showDrops(drops: List<Drop>)
+    }
 
-  interface Presenter : BasePresenter {
-    fun getDrops(): List<Drop>
-    fun addDrop(drop: Drop)
-    fun clearAllDrops()
-  }
+    interface Presenter : BasePresenter {
+        fun getDrops(): List<Drop>
+        fun addDrop(drop: Drop)
+        fun clearAllDrops()
+        fun saveMarketColor(marketColor: String)
+        fun getMarcketColor(): String
+        fun saveMapType(mapType: String)
+        fun getMapType(): String
+    }
 }
