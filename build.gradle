@@ -4,6 +4,8 @@ buildscript {
   ext {
     kotlin_version = '1.2.21'
     support_lib_version = '27.0.2'
+    room_version = '1.0.0'
+    archLifecycle_version = '1.1.0'
   }
   repositories {
     google()

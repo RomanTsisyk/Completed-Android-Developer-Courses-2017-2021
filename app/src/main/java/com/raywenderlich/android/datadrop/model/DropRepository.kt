@@ -31,9 +31,14 @@
 
 package com.raywenderlich.android.datadrop.model
 
+import android.arch.lifecycle.LiveData
+import com.raywenderlich.android.datadrop.viewmodel.ClearAllDropsListener
+import com.raywenderlich.android.datadrop.viewmodel.ClearDropsListener
+import com.raywenderlich.android.datadrop.viewmodel.DropsInsertListener
+
 interface DropRepository {
-  fun addDrop(drop: Drop)
-  fun getDrops(): List<Drop>
-  fun clearDrop(drop: Drop)
-  fun clearAllDrops()
+  fun addDrop(drop: Drop, listener: DropsInsertListener)
+  fun getDrops(): LiveData<List<Drop>>
+  fun clearDrop(drop: Drop, listener: ClearDropsListener)
+  fun clearAllDrops(listener: ClearAllDropsListener)
 }

@@ -15,7 +15,7 @@ object MapPrefs {
         editor.putString(KEY_MARKER_COLOR, marketColor).apply()
     }
 
-    fun getMarketColor(): String = sharedPrefs().getString(KEY_MARKER_COLOR, "RED")
+    fun getMarkerColor(): String = sharedPrefs().getString(KEY_MARKER_COLOR, "RED")
 
     fun saveMapType(mapType: String) {
         sharedPrefs().edit().putString(KEY_MAP_TYPE, mapType).apply()
