@@ -52,195 +52,221 @@ import com.raywenderlich.android.datadrop.R
 import com.raywenderlich.android.datadrop.app.Injection
 import com.raywenderlich.android.datadrop.model.Drop
 import com.raywenderlich.android.datadrop.ui.droplist.DropListActivity
+import kotlinx.android.synthetic.main.dialog_drop.*
 
 
 class MapActivity : AppCompatActivity(), OnMapReadyCallback, MapContract.View {
 
-  override lateinit var presenter: MapContract.Presenter
+    override lateinit var presenter: MapContract.Presenter
 
-  private lateinit var map: GoogleMap
+    private lateinit var map: GoogleMap
 
-  private var mapIsReady = false
+    private var mapIsReady = false
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_map)
-    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-    val mapFragment = supportFragmentManager
-        .findFragmentById(R.id.map) as SupportMapFragment
-    mapFragment.getMapAsync(this)
-  }
-
-  override fun onMapReady(googleMap: GoogleMap) {
-    map = googleMap
-
-    val googleplex = LatLng(37.4220, -122.0841)
-    map.moveCamera(CameraUpdateFactory.newLatLngZoom(googleplex, 12.0f))
-
-    map.setOnMapLongClickListener { latLng ->
-      showDropDialog(latLng)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_map)
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        val mapFragment = supportFragmentManager
+                .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
-    presenter = Injection.provideMapPresenter(this)
-    presenter.start()
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
 
-    map.mapType = MapType.createMapType(presenter.getMapType()).getGoogleMapType()
+        val googleplex = LatLng(37.4220, -122.0841)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(googleplex, 12.0f))
 
-    mapIsReady = true
-  }
+        map.setOnMapLongClickListener { latLng ->
+            showDropDialog(latLng)
+        }
 
-  override fun onResume() {
-    super.onResume()
+        presenter = Injection.provideMapPresenter(this)
+        presenter.start()
 
-    if (mapIsReady) {
-      presenter.start()
-    }
-  }
+        map.mapType = MapType.createMapType(presenter.getMapType()).getGoogleMapType()
 
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    super.onCreateOptionsMenu(menu)
-    menuInflater.inflate(R.menu.menu_map, menu)
-    return true
-  }
-
-  override fun onOptionsItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.list_drops_menu_item -> showDropList()
-      R.id.marker_color_menu_item -> showMarkerColorDialog()
-      R.id.map_type_menu_item -> showMapTypeDialog()
-      R.id.clear_all_drops_menu_item -> showClearAllDialog()
-    }
-    return super.onOptionsItemSelected(item)
-  }
-
-  override fun showDrop(drop: Drop) {
-    placeMarkerOnMap(drop.latLng, drop.dropMessage)
-  }
-
-  override fun showDrops(drops: List<Drop>) {
-    map.clear()
-    drops.forEach { drop ->
-      placeMarkerOnMap(drop.latLng, drop.dropMessage)
-    }
-  }
-
-  private fun placeMarkerOnMap(location: LatLng, title: String) {
-    val markerOptions = MarkerOptions().position(location)
-    markerOptions.title(title)
-
-    val markerColor = MarkerColor.createMarkerColor(presenter.getMarcketColor())
-    markerOptions.icon(markerColor.getMarkerBitmapDescriptor())
-    map.addMarker(markerOptions)
-  }
-
-  private fun showDropDialog(latLng: LatLng) {
-    val dialogBuilder = AlertDialog.Builder(this)
-    val dialogView = this.layoutInflater.inflate(R.layout.dialog_drop, null)
-    dialogBuilder.setView(dialogView)
-
-    val messageEditText = dialogView.findViewById(R.id.messageEditText) as EditText
-
-    dialogBuilder.setTitle(getString(R.string.make_a_drop))
-    dialogBuilder.setPositiveButton(getString(R.string.drop), { _, _ ->
-      addDrop(latLng, messageEditText.text.toString())
-    })
-    dialogBuilder.setNegativeButton(getString(R.string.cancel), { _, _ ->
-      //pass
-    })
-
-    val dialog = dialogBuilder.create()
-
-    dialog.setOnShowListener {
-      dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+        mapIsReady = true
     }
 
-    messageEditText.addTextChangedListener(object : TextWatcher {
-      override fun afterTextChanged(s: Editable?) {
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = !s.isNullOrBlank()
-      }
-      override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-      }
-      override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
-      }
-    })
+    override fun onResume() {
+        super.onResume()
 
-    dialog.show()
-  }
-
-  private fun showClearAllDialog() {
-    AlertDialog.Builder(this)
-        .setTitle(getString(R.string.clear_all_drops_title))
-        .setIcon(android.R.drawable.ic_dialog_alert)
-        .setPositiveButton(android.R.string.yes) { _, _ -> clearAllDrops() }
-        .setNegativeButton(android.R.string.no, null).show()
-  }
-
-  private fun showDropList() {
-    startActivity(DropListActivity.newIntent(this))
-  }
-
-  private fun showMarkerColorDialog() {
-    val dialog = Dialog(this)
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    dialog.setContentView(R.layout.dialog_radio_group)
-
-    val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
-
-    MarkerColor.values().forEach { markerColor ->
-      val rb = RadioButton(this)
-      rb.text = markerColor.displayString
-      rb.setPadding(48, 48, 48, 48)
-      rg.addView(rb)
-      if (presenter.getMarcketColor() == markerColor.displayString){
-        rg.check(rb.id)
-      }
+        if (mapIsReady) {
+            presenter.start()
+        }
     }
 
-    rg.setOnCheckedChangeListener { group, checkedId ->
-      val childCount = group.childCount
-      (0 until childCount)
-          .map { group.getChildAt(it) as RadioButton }
-          .filter { it.id == checkedId }
-          .forEach { presenter.saveMarketColor(it.text.toString()) }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.menu_map, menu)
+        return true
     }
 
-    dialog.show()
-  }
-
-  private fun showMapTypeDialog() {
-    val dialog = Dialog(this)
-    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-    dialog.setContentView(R.layout.dialog_radio_group)
-
-    val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
-
-    MapType.values().forEach { mapType ->
-      val rb = RadioButton(this)
-      rb.text = mapType.displayString
-      rb.setPadding(48, 48, 48, 48)
-      rg.addView(rb)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.list_drops_menu_item -> showDropList()
+            R.id.marker_color_menu_item -> showMarkerColorDialog()
+            R.id.map_type_menu_item -> showMapTypeDialog()
+            R.id.clear_all_drops_menu_item -> showClearAllDialog()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
-    rg.setOnCheckedChangeListener { group, checkedId ->
-      val childCount = group.childCount
-      (0 until childCount)
-          .map { group.getChildAt(it) as RadioButton }
-          .filter { it.id == checkedId }
-          .forEach {
-            presenter.saveMapType(it.text.toString())
-            map.mapType = MapType.createMapType(presenter.getMapType()).getGoogleMapType()
-          }
+    override fun showDrop(drop: Drop) {
+        placeMarkerOnMap(drop.latLng, drop.dropMessage, drop.marketColor)
     }
 
-    dialog.show()
-  }
+    override fun showDrops(drops: List<Drop>) {
+        map.clear()
+        drops.forEach { drop ->
+            placeMarkerOnMap(drop.latLng, drop.dropMessage, drop.marketColor)
+        }
+    }
 
-  private fun addDrop(latLng: LatLng, message: String) {
-    presenter.addDrop(Drop(latLng, message))
-  }
+    private fun placeMarkerOnMap(location: LatLng, title: String, color: Int = 0) {
+        val markerOptions = MarkerOptions().position(location)
+        markerOptions.title(title)
 
-  private fun clearAllDrops() {
-    presenter.clearAllDrops()
-    map.clear()
-  }
+        val markerColor = MarkerColor.createMarkerColor(color)
+        markerOptions.icon(markerColor.getMarkerBitmapDescriptor())
+        map.addMarker(markerOptions)
+    }
+
+    private fun showDropDialog(latLng: LatLng) {
+        val dialogBuilder = AlertDialog.Builder(this)
+        val dialogView = this.layoutInflater.inflate(R.layout.dialog_drop, null)
+        dialogBuilder.setView(dialogView)
+
+        val messageEditText = dialogView.findViewById(R.id.messageEditText) as EditText
+
+        val rg = dialogView.findViewById<RadioGroup>(R.id.radio_group)
+        var color = 0
+        for ((index, marketColor) in MarkerColor.values().withIndex()) {
+            val rb = RadioButton(this)
+            rb.text = marketColor.displayString
+            rb.setPadding(36, 36, 36, 36)
+            rg.addView(rb)
+            if (presenter.getMarcketColor() == marketColor.displayString) {
+                rg.check(rb.id)
+                color = index
+            }
+        }
+
+        rg.setOnCheckedChangeListener { radio_group, checkedId ->
+            val childCount = radio_group.childCount
+            for (index in 0 until childCount) {
+                val button = radio_group.getChildAt(index)
+                if (button.id == checkedId) {
+                    color = index
+                }
+            }
+        }
+
+        dialogBuilder.setTitle(getString(R.string.make_a_drop))
+        dialogBuilder.setPositiveButton(getString(R.string.drop)) { _, _ ->
+            addDrop(latLng, messageEditText.text.toString(), color)
+        }
+        dialogBuilder.setNegativeButton(getString(R.string.cancel), { _, _ ->
+            //pass
+        })
+
+        val dialog = dialogBuilder.create()
+
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
+        }
+
+        messageEditText.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = !s.isNullOrBlank()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+        })
+
+        dialog.show()
+    }
+
+    private fun showClearAllDialog() {
+        AlertDialog.Builder(this)
+                .setTitle(getString(R.string.clear_all_drops_title))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes) { _, _ -> clearAllDrops() }
+                .setNegativeButton(android.R.string.no, null).show()
+    }
+
+    private fun showDropList() {
+        startActivity(DropListActivity.newIntent(this))
+    }
+
+    private fun showMarkerColorDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_radio_group)
+
+        val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
+
+        MarkerColor.values().forEach { markerColor ->
+            val rb = RadioButton(this)
+            rb.text = markerColor.displayString
+            rb.setPadding(48, 48, 48, 48)
+            rg.addView(rb)
+            if (presenter.getMarcketColor() == markerColor.displayString) {
+                rg.check(rb.id)
+            }
+        }
+
+        rg.setOnCheckedChangeListener { group, checkedId ->
+            val childCount = group.childCount
+            (0 until childCount)
+                    .map { group.getChildAt(it) as RadioButton }
+                    .filter { it.id == checkedId }
+                    .forEach { presenter.saveMarketColor(it.text.toString()) }
+        }
+
+        dialog.show()
+    }
+
+    private fun showMapTypeDialog() {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_radio_group)
+
+        val rg = dialog.findViewById(R.id.radio_group) as RadioGroup
+
+        MapType.values().forEach { mapType ->
+            val rb = RadioButton(this)
+            rb.text = mapType.displayString
+            rb.setPadding(48, 48, 48, 48)
+            rg.addView(rb)
+        }
+
+        rg.setOnCheckedChangeListener { group, checkedId ->
+            val childCount = group.childCount
+            (0 until childCount)
+                    .map { group.getChildAt(it) as RadioButton }
+                    .filter { it.id == checkedId }
+                    .forEach {
+                        presenter.saveMapType(it.text.toString())
+                        map.mapType = MapType.createMapType(presenter.getMapType()).getGoogleMapType()
+                    }
+        }
+
+        dialog.show()
+    }
+
+    private fun addDrop(latLng: LatLng, message: String, markerColor: Int) {
+        presenter.addDrop(Drop(latLng, message, marketColor = markerColor))
+    }
+
+    private fun clearAllDrops() {
+        presenter.clearAllDrops()
+        map.clear()
+    }
 }
