@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.database
+package com.raywenderlich.android.moviepager.repository
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
@@ -37,8 +37,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
-import com.raywenderlich.android.moviepager.model.Movie
-import com.raywenderlich.android.moviepager.utils.bgThread
+import com.raywenderlich.android.moviepager.bgThread
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 

@@ -28,13 +28,30 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.utils
+package com.raywenderlich.android.moviepager.viewmodel
 
-import android.support.annotation.LayoutRes
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import android.arch.paging.LivePagedListBuilder
+import android.arch.paging.PagedList
+import com.raywenderlich.android.moviepager.bgThread
+import com.raywenderlich.android.moviepager.repository.Movie
+import com.raywenderlich.android.moviepager.repository.MovieDatabase
 
-fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
-  return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+class MovieListViewModel(application: Application) : AndroidViewModel(application) {
+  private val dao = MovieDatabase.get(application).movieDao()
+
+  val allMovies = LivePagedListBuilder(dao.allMovies(), PagedList.Config.Builder()
+      .setPageSize(PAGE_SIZE)
+      .setEnablePlaceholders(ENABLE_PLACEHOLDERS)
+      .build()).build()
+
+  fun remove(movie: Movie) = bgThread {
+      dao.delete(movie)
+  }
+
+  companion object {
+    private const val PAGE_SIZE = 30
+    private const val ENABLE_PLACEHOLDERS = true
+  }
 }

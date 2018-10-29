@@ -28,12 +28,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.utils
+package com.raywenderlich.android.moviepager
 
-import java.util.concurrent.Executors
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 
-private val BG_EXECUTOR = Executors.newSingleThreadExecutor()
-
-fun bgThread(f : () -> Unit) {
-  BG_EXECUTOR.execute(f)
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+  return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }

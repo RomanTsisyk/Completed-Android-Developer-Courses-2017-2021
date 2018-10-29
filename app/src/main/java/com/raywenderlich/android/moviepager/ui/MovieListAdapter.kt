@@ -28,27 +28,49 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.database
+package com.raywenderlich.android.moviepager.ui
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import com.raywenderlich.android.moviepager.model.Movie
+import android.arch.paging.PagedListAdapter
+import android.support.v7.util.DiffUtil
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.view.ViewGroup
+import com.raywenderlich.android.moviepager.repository.Movie
+import com.raywenderlich.android.moviepager.R
+import com.raywenderlich.android.moviepager.inflate
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.list_item_movie.*
 
-@Dao
-interface MovieDao {
 
-  @Query("SELECT * FROM Movie ORDER BY ranking")
-  fun allMovies(): LiveData<List<Movie>>
+class MovieListAdapter : PagedListAdapter<Movie, MovieListAdapter.MovieViewHolder>(diffCallback) {
 
-  @Insert
-  fun insert(movies: List<Movie>)
+  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+          MovieViewHolder(parent.inflate(R.layout.list_item_movie))
 
-  @Insert
-  fun insert(movie: Movie)
+  override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    holder.bind(getItem(position))
+  }
 
-  @Delete
-  fun delete(movie: Movie)
+  companion object {
+
+    private val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
+      override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+          oldItem.id == newItem.id
+      override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
+          oldItem == newItem
+    }
+  }
+
+  class MovieViewHolder(override val containerView: View)
+    : RecyclerView.ViewHolder(containerView), LayoutContainer {
+
+    var movie: Movie? = null
+
+    fun bind(movie: Movie?) {
+      this.movie = movie
+      title.text = movie?.title
+      releaseDate.text = movie?.releaseDate?.substring(0, 4)
+      rating.text = movie?.rating.toString()
+    }
+  }
 }

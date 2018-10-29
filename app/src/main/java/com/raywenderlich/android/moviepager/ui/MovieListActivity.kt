@@ -38,8 +38,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
-import com.raywenderlich.android.moviepager.R
 import com.raywenderlich.android.moviepager.viewmodel.MovieListViewModel
+import com.raywenderlich.android.moviepager.R
 import kotlinx.android.synthetic.main.activity_movie_list.*
 
 class MovieListActivity : AppCompatActivity() {
@@ -48,7 +48,7 @@ class MovieListActivity : AppCompatActivity() {
     ViewModelProviders.of(this).get(MovieListViewModel::class.java)
   }
 
-  private val adapter = MovieListAdapter(emptyList())
+  private val adapter = MovieListAdapter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -56,11 +56,7 @@ class MovieListActivity : AppCompatActivity() {
 
     movieRecyclerView.adapter = adapter
 
-    viewModel.allMovies.observe(this, Observer { movies ->
-      if (movies != null) {
-        adapter.updateMovies(movies)
-      }
-    })
+    viewModel.allMovies.observe(this, Observer(adapter::submitList))
 
     setupSwipeToDelete()
   }

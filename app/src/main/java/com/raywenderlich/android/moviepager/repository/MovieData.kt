@@ -28,20 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.viewmodel
+package com.raywenderlich.android.moviepager.repository
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
-import com.raywenderlich.android.moviepager.model.Movie
-import com.raywenderlich.android.moviepager.database.MovieDatabase
-import com.raywenderlich.android.moviepager.utils.bgThread
 
-class MovieListViewModel(application: Application) : AndroidViewModel(application) {
-  private val dao = MovieDatabase.get(application).movieDao()
-
-  val allMovies = dao.allMovies()
-
-  fun remove(movie: Movie) = bgThread {
-      dao.delete(movie)
-  }
-}
+data class MovieData(var movies: List<Movie>)

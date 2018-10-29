@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager.model
+package com.raywenderlich.android.moviepager.repository
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
