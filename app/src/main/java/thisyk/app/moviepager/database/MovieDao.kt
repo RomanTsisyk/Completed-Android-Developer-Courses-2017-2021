@@ -28,16 +28,27 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.database
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
+import android.arch.lifecycle.LiveData
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.Query
+import com.raywenderlich.android.moviepager.model.Movie
 
-@Entity
-data class Movie(
-    @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val rating: Double,
-    @SerializedName("release_date") val releaseDate: String,
-    val ranking: Int)
+@Dao
+interface MovieDao {
+
+  @Query("SELECT * FROM Movie ORDER BY ranking")
+  fun allMovies(): LiveData<List<Movie>>
+
+  @Insert
+  fun insert(movies: List<Movie>)
+
+  @Insert
+  fun insert(movie: Movie)
+
+  @Delete
+  fun delete(movie: Movie)
+}

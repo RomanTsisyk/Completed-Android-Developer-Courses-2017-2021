@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.database
 
 import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
@@ -37,6 +37,8 @@ import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
+import com.raywenderlich.android.moviepager.model.Movie
+import com.raywenderlich.android.moviepager.utils.bgThread
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
@@ -55,7 +57,7 @@ abstract class MovieDatabase : RoomDatabase() {
             MovieDatabase::class.java, "MovieDatabase")
             .addCallback(object : RoomDatabase.Callback() {
               override fun onCreate(db: SupportSQLiteDatabase) {
-                fillInDatabase(context.applicationContext)
+                  fillInDatabase(context.applicationContext)
               }
             }).build()
       }
@@ -63,15 +65,15 @@ abstract class MovieDatabase : RoomDatabase() {
     }
 
     private fun fillInDatabase(context: Context) {
-      bgThread {
-        val jsonString = readJson(context)
+        bgThread {
+            val jsonString = readJson(context)
 
-        if (jsonString != null) {
-          val movieData = Gson().fromJson(jsonString, MovieData::class.java)
-          get(context).movieDao().insert(movieData.movies)
-          Log.v(TAG, movieData.toString())
+            if (jsonString != null) {
+                val movieData = Gson().fromJson(jsonString, MovieData::class.java)
+                get(context).movieDao().insert(movieData.movies)
+                Log.v(TAG, movieData.toString())
+            }
         }
-      }
     }
 
     private fun readJson(context: Context): String? {

@@ -28,12 +28,9 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.database
 
-import java.util.concurrent.Executors
+import com.raywenderlich.android.moviepager.model.Movie
 
-private val BG_EXECUTOR = Executors.newSingleThreadExecutor()
 
-fun bgThread(f : () -> Unit) {
-  BG_EXECUTOR.execute(f)
-}
+data class MovieData(var movies: List<Movie>)

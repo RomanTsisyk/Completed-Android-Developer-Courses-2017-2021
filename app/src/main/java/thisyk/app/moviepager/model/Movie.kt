@@ -28,7 +28,16 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.model
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-data class MovieData(var movies: List<Movie>)
+@Entity
+data class Movie(
+    @PrimaryKey(autoGenerate = true) val id: Int,
+    val title: String,
+    val rating: Double,
+    @SerializedName("release_date") val releaseDate: String,
+    val ranking: Int)

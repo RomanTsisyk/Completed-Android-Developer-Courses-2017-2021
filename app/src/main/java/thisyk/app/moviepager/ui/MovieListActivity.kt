@@ -28,7 +28,7 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.ui
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -38,6 +38,8 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.Menu
 import android.view.MenuItem
+import com.raywenderlich.android.moviepager.R
+import com.raywenderlich.android.moviepager.viewmodel.MovieListViewModel
 import kotlinx.android.synthetic.main.activity_movie_list.*
 
 class MovieListActivity : AppCompatActivity() {

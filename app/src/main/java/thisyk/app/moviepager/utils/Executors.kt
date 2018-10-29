@@ -28,53 +28,12 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.utils
 
-import android.support.v7.util.DiffUtil
-import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.view.ViewGroup
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.list_item_movie.*
+import java.util.concurrent.Executors
 
+private val BG_EXECUTOR = Executors.newSingleThreadExecutor()
 
-class MovieListAdapter(private var movieList: List<Movie>)
-  : RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
-
-  override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-      MovieViewHolder(parent.inflate(R.layout.list_item_movie))
-
-  override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-    holder.bind(movieList[position])
-  }
-
-  override fun getItemCount() = movieList.size
-
-  fun updateMovies(movies: List<Movie>) {
-    movieList = movies
-    notifyDataSetChanged()
-  }
-
-  companion object {
-
-    private val diffCallback = object : DiffUtil.ItemCallback<Movie>() {
-      override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-          oldItem.id == newItem.id
-      override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean =
-          oldItem == newItem
-    }
-  }
-
-  class MovieViewHolder(override val containerView: View)
-    : RecyclerView.ViewHolder(containerView), LayoutContainer {
-
-    var movie: Movie? = null
-
-    fun bind(movie: Movie) {
-      this.movie = movie
-      title.text = movie.title
-      releaseDate.text = movie.releaseDate.substring(0, 4)
-      rating.text = movie.rating.toString()
-    }
-  }
+fun bgThread(f : () -> Unit) {
+  BG_EXECUTOR.execute(f)
 }

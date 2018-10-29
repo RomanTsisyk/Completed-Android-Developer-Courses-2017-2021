@@ -28,26 +28,20 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
+import com.raywenderlich.android.moviepager.model.Movie
+import com.raywenderlich.android.moviepager.database.MovieDatabase
+import com.raywenderlich.android.moviepager.utils.bgThread
 
-@Dao
-interface MovieDao {
+class MovieListViewModel(application: Application) : AndroidViewModel(application) {
+  private val dao = MovieDatabase.get(application).movieDao()
 
-  @Query("SELECT * FROM Movie ORDER BY ranking")
-  fun allMovies(): LiveData<List<Movie>>
+  val allMovies = dao.allMovies()
 
-  @Insert
-  fun insert(movies: List<Movie>)
-
-  @Insert
-  fun insert(movie: Movie)
-
-  @Delete
-  fun delete(movie: Movie)
+  fun remove(movie: Movie) = bgThread {
+      dao.delete(movie)
+  }
 }

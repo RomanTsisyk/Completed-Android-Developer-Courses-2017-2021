@@ -28,17 +28,13 @@
  * THE SOFTWARE.
  */
 
-package com.raywenderlich.android.moviepager
+package com.raywenderlich.android.moviepager.utils
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import android.support.annotation.LayoutRes
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 
-class MovieListViewModel(application: Application) : AndroidViewModel(application) {
-  private val dao = MovieDatabase.get(application).movieDao()
-
-  val allMovies = dao.allMovies()
-
-  fun remove(movie: Movie) = bgThread {
-    dao.delete(movie)
-  }
+fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
+  return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
