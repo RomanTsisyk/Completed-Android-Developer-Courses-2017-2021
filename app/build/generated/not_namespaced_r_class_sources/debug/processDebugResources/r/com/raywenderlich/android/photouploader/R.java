@@ -2626,6 +2626,9 @@ public final class R {
     public static final int abc_allow_stacked_button_bar=0x7f030001;
     public static final int abc_config_actionMenuItemAllCaps=0x7f030002;
     public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f030003;
+    public static final int enable_system_alarm_service_default=0x7f030004;
+    public static final int enable_system_job_service_default=0x7f030005;
+    public static final int workmanager_test_configuration=0x7f030006;
   }
   public static final class color {
     public static final int abc_background_cache_hint_selector_material_dark=0x7f040000;

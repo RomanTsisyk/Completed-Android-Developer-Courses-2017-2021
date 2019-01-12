@@ -1,4 +1,4 @@
-#Thu Jun 25 16:40:28 CEST 2020
+#Thu Jun 25 20:02:25 CEST 2020
 base.0=C\:\\App\\App 2020\\_Start Apps\\jetpack_workmanager\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\3
 path.0=classes.dex
 renamed.0=classes.dex
