@@ -32,6 +32,9 @@ package com.raywenderlich.cheesefinder
 
 import android.text.Editable
 import android.text.TextWatcher
+import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.widget.textChangeEvents
+import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -41,60 +44,36 @@ import java.util.concurrent.TimeUnit
 
 class CheeseActivity : BaseSearchActivity() {
 
-  private lateinit var disposable: Disposable
+    private lateinit var disposable: Disposable
 
-  override fun onStart() {
-    super.onStart()
-    val mergedObservable = Observable.merge<String>(createButtonClickObservable(), createTextChangeObservable())
-    disposable = mergedObservable
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnNext { showProgress() }
-        .observeOn(Schedulers.io())
-        .map { cheeseSearchEngine.search(it) }
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe {
-          hideProgress()
-          showResult(it)
+    override fun onStart() {
+        super.onStart()
+        val mergedObservable = Observable.merge<String>(createButtonClickObservable(), createTextChangeObservable())
+        disposable = mergedObservable
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { showProgress() }
+                .observeOn(Schedulers.io())
+                .map { cheeseSearchEngine.search(it) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    hideProgress()
+                    showResult(it)
+                }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (!disposable.isDisposed) {
+            disposable.dispose()
         }
-  }
-
-  override fun onStop() {
-    super.onStop()
-    if (!disposable.isDisposed){
-      disposable.dispose()
     }
-  }
 
-  private fun createButtonClickObservable(): Observable<String> {
-    return Observable.create { emitter ->
-      searchButton.setOnClickListener {
-        emitter.onNext(queryEditText.text.toString())
-      }
-      emitter.setCancellable {
-        searchButton.setOnClickListener(null)
-      }
-    }
-  }
+    private fun createButtonClickObservable() = searchButton.clicks()
+            .map<String> { queryEditText.text.toString() }
 
-  private fun createTextChangeObservable(): Observable<String> {
-    val textChangeObservable = Observable.create<String> { emitter ->
-      val textWatcher = object : TextWatcher {
 
-        override fun afterTextChanged(s: Editable?) = Unit
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-        override fun onTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-          s?.toString()?.let { emitter.onNext(it) }
-        }
-      }
-      queryEditText.addTextChangedListener(textWatcher)
-      emitter.setCancellable {
-        queryEditText.removeTextChangedListener(textWatcher)
-      }
-    }
-    return textChangeObservable
-        .filter { it.length >= 2 }
-        .debounce(1000, TimeUnit.MILLISECONDS) // add this line
-  }
+    private fun createTextChangeObservable() = queryEditText.textChanges()
+            .filter { it.length > 3 }
+            .debounce(1000, TimeUnit.MILLISECONDS)
+            .map { it.toString() }
 }
