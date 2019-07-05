@@ -21,22 +21,22 @@ class QuizFragment : Fragment() {
     // resources so we could internationalize. (or better yet, not define the questions in code...)
     private val questions: MutableList<Quiz> = mutableListOf(
             Quiz(text = "What country is FIFA headquartered in?",
-                    answers = listOf("Switzerland", "Serbia", "Slovenia", "Slovakia", "Switzerland")),
+                    answers = listOf("Switzerland", "Serbia", "Slovenia", "Slovakia")),
             Quiz(text = "What nation has played in every world cup?",
-                    answers = listOf("Brazil", "Poland", "Panama", "Portugal", "Brazil")),
+                    answers = listOf("Brazil", "Poland", "Panama", "Portugal")),
             Quiz(text = "Which of these countries did not participate in the first World Cup?",
-                    answers = listOf("Germany", "Romania", "Peru", "Germany", "USA")),
+                    answers = listOf("Germany", "Romania", "Peru", "USA")),
             Quiz(text = "How many teams participated in the first World Cup?",
-                    answers = listOf("13", "16", "17", "13", "12")),
+                    answers = listOf("13", "16", "17", "12")),
             Quiz(text = ". How many different countries have won a World Cup?",
-                    answers = listOf("8", "10", "11", "8", "9")),
+                    answers = listOf("8", "10", "11", "9")),
             Quiz(text = "Who makes the official soccer ball of the 2014 World Cup?",
-                    answers = listOf("Adidas", "Puma", "Adidas", "Nice", "Reebok")),
+                    answers = listOf("Adidas", "Puma", "Nice", "Reebok")),
             Quiz(text = "Which African country has competed in 7 World Cups, the most of any African country?",
-                    answers = listOf("Cameroon", "Nigeria", "Cameroon", "Morocco", "Ghana")),
+                    answers = listOf("Cameroon", "Nigeria", "Morocco", "Ghana")),
             Quiz(text = "Ernie Brandts is the only player to score a goal for both teams during a World Cup match.\n" +
                     "What country did Ernie play for?",
-                    answers = listOf("The Netherlands", "The Netherlands", "Germany", "Portugal", "Brazil"))
+                    answers = listOf("The Netherlands", "Germany", "Portugal", "Brazil"))
     )
 
     lateinit var currentQuestion: Quiz
@@ -68,7 +68,6 @@ class QuizFragment : Fragment() {
                     R.id.secondAnswerRadioButton -> answerIndex = 1
                     R.id.thirdAnswerRadioButton -> answerIndex = 2
                     R.id.fourthAnswerRadioButton -> answerIndex = 3
-                    R.id.fourthAnswerRadioButton -> answerIndex = 4
                 }
                 // The first answer in the original question is always the correct one, so if our
                 // answer matches, we have the correct answer.
@@ -80,11 +79,11 @@ class QuizFragment : Fragment() {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        view.findNavController().navigate( R.id.action_quizFragment_to_quizWonFragment)
+                        view.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizWonFragment(numQuestions, questionIndex))
 
                     }
                 } else {
-                    // Game over! A wrong answer sends us to the gameOverFragment.
+                    view.findNavController().navigate(QuizFragmentDirections.actionQuizFragmentToQuizOverFragment())
                 }
             }
         }

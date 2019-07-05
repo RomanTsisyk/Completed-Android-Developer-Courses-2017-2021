@@ -15,7 +15,8 @@ class QuizOverFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding: FragmentGameOverBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_game_over, container, false)
-        binding.tryAgainButton.setOnClickListener { view: View -> view.findNavController().navigate(R.id.action_quizFragment_to_quizOverFragment) }
+        binding.tryAgainButton.setOnClickListener { view: View -> view.findNavController()
+                .navigate(QuizOverFragmentDirections.actionQuizOverFragmentToQuizFragment()) }
         return binding.root
     }
 }
