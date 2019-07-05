@@ -103,6 +103,14 @@
                     android:text="@{quiz.answers[3]}"
                     android:textSize="@dimen/answer_text_size"
                     tools:text="Red" />
+
+                <RadioButton
+                    android:id="@+id/fivthAnswerRadioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{quiz.answers[4]}"
+                    android:textSize="@dimen/answer_text_size"
+                    tools:text="BLACK" />
             </RadioGroup>
 
             <Button

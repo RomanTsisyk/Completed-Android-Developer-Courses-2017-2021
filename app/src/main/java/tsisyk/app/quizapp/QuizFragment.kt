@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import tsisyk.app.quizapp.databinding.FragmentGameBinding
 import kotlin.math.min
 
@@ -19,26 +20,23 @@ class QuizFragment : Fragment() {
     // All questions must have four answers.  We'd want these to contain references to string
     // resources so we could internationalize. (or better yet, not define the questions in code...)
     private val questions: MutableList<Quiz> = mutableListOf(
-            Quiz(text = "What is Android Jetpack?",
-                    answers = listOf("all of these", "tools", "documentation", "libraries")),
-            Quiz(text = "Base class for Layout?",
-                    answers = listOf("ViewGroup", "ViewSet", "ViewCollection", "ViewRoot")),
-            Quiz(text = "Layout for complex Screens?",
-                    answers = listOf("ConstraintLayout", "GridLayout", "LinearLayout", "FrameLayout")),
-            Quiz(text = "Pushing structured data into a Layout?",
-                    answers = listOf("Data Binding", "Data Pushing", "Set Text", "OnClick")),
-            Quiz(text = "Inflate layout in fragments?",
-                    answers = listOf("onCreateView", "onActivityCreated", "onCreateLayout", "onInflateLayout")),
-            Quiz(text = "Build system for Android?",
-                    answers = listOf("Gradle", "Graddle", "Grodle", "Groyle")),
-            Quiz(text = "Android vector format?",
-                    answers = listOf("VectorDrawable", "AndroidVectorDrawable", "DrawableVector", "AndroidVector")),
-            Quiz(text = "Android Navigation Component?",
-                    answers = listOf("NavController", "NavCentral", "NavMaster", "NavSwitcher")),
-            Quiz(text = "Registers app with launcher?",
-                    answers = listOf("intent-filter", "app-registry", "launcher-registry", "app-launcher")),
-            Quiz(text = "Mark a layout for Data Binding?",
-                    answers = listOf("<layout>", "<binding>", "<data-binding>", "<dbinding>"))
+            Quiz(text = "What country is FIFA headquartered in?",
+                    answers = listOf("Switzerland", "Serbia", "Slovenia", "Slovakia", "Switzerland")),
+            Quiz(text = "What nation has played in every world cup?",
+                    answers = listOf("Brazil", "Poland", "Panama", "Portugal", "Brazil")),
+            Quiz(text = "Which of these countries did not participate in the first World Cup?",
+                    answers = listOf("Germany", "Romania", "Peru", "Germany", "USA")),
+            Quiz(text = "How many teams participated in the first World Cup?",
+                    answers = listOf("13", "16", "17", "13", "12")),
+            Quiz(text = ". How many different countries have won a World Cup?",
+                    answers = listOf("8", "10", "11", "8", "9")),
+            Quiz(text = "Who makes the official soccer ball of the 2014 World Cup?",
+                    answers = listOf("Adidas", "Puma", "Adidas", "Nice", "Reebok")),
+            Quiz(text = "Which African country has competed in 7 World Cups, the most of any African country?",
+                    answers = listOf("Cameroon", "Nigeria", "Cameroon", "Morocco", "Ghana")),
+            Quiz(text = "Ernie Brandts is the only player to score a goal for both teams during a World Cup match.\n" +
+                    "What country did Ernie play for?",
+                    answers = listOf("The Netherlands", "The Netherlands", "Germany", "Portugal", "Brazil"))
     )
 
     lateinit var currentQuestion: Quiz
@@ -70,6 +68,7 @@ class QuizFragment : Fragment() {
                     R.id.secondAnswerRadioButton -> answerIndex = 1
                     R.id.thirdAnswerRadioButton -> answerIndex = 2
                     R.id.fourthAnswerRadioButton -> answerIndex = 3
+                    R.id.fourthAnswerRadioButton -> answerIndex = 4
                 }
                 // The first answer in the original question is always the correct one, so if our
                 // answer matches, we have the correct answer.
@@ -81,7 +80,8 @@ class QuizFragment : Fragment() {
                         setQuestion()
                         binding.invalidateAll()
                     } else {
-                        // We've won!  Navigate to the gameWonFragment.
+                        view.findNavController().navigate( R.id.action_quizFragment_to_quizWonFragment)
+
                     }
                 } else {
                     // Game over! A wrong answer sends us to the gameOverFragment.
@@ -91,15 +91,12 @@ class QuizFragment : Fragment() {
         return binding.root
     }
 
-    // randomize the questions and set the first question
     private fun randomizeQuestions() {
         questions.shuffle()
         questionIndex = 0
         setQuestion()
     }
 
-    // Sets the question and randomizes the answers.  This only changes the data, not the UI.
-    // Calling invalidateAll on the FragmentGameBinding updates the data.
     private fun setQuestion() {
         currentQuestion = questions[questionIndex]
         // randomize the answers into a copy of the array
@@ -107,6 +104,7 @@ class QuizFragment : Fragment() {
         // and shuffle them
         answers.shuffle()
         (activity as AppCompatActivity).supportActionBar?.title =
-                getString(R.string.title_android_trivia_question, questionIndex + 1, numQuestions)
+                getString(R.string.title_android_soccer_question,
+                        questionIndex + 1, numQuestions)
     }
 }
