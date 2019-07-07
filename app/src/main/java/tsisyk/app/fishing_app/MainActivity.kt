@@ -1,9 +1,11 @@
 package tsisyk.app.fishing_app
 
 import android.content.ActivityNotFoundException
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -11,34 +13,39 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.lifecycle.LifecycleObserver
 import timber.log.Timber
 import tsisyk.app.fishing_app.databinding.ActivityMainBinding
+import android.view.animation.AnimationUtils
+import kotlin.random.Random
+
 
 const val KEY_REVENUE = "revenue_key"
-const val KEY_DESSERT_SOLD = "dessert_sold_key"
+const val KEY_FISHES = "fishes_key"
 const val KEY_TIMER_SECONDS = "timer_seconds_key"
 
 class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     private var revenue = 0
     private var fishGeted = 0
-    private lateinit var timer: Timer
+    private var l = Int
 
+    private lateinit var timer: Timer
     private lateinit var binding: ActivityMainBinding
 
     data class Dessert(val imageId: Int, val price: Int, val startProductionAmount: Int)
+
     private val allFishes = listOf(
-        Dessert(R.drawable.fish1, 5, 5),
+        Dessert(R.drawable.fish1, 5, 0),
         Dessert(R.drawable.fish2, 5, 5),
-        Dessert(R.drawable.fish3, 5, 5),
-        Dessert(R.drawable.fish4, 5, 5),
-        Dessert(R.drawable.fish5, 5, 5),
-        Dessert(R.drawable.fish6, 5, 5),
-        Dessert(R.drawable.fish7, 5, 5),
-        Dessert(R.drawable.fish8, 5, 5),
-        Dessert(R.drawable.fish9, 5, 5),
-        Dessert(R.drawable.fish10, 5, 5),
-        Dessert(R.drawable.fish11, 5, 5),
-        Dessert(R.drawable.fish11, 5, 5),
-        Dessert(R.drawable.fish12, 5, 5)
+        Dessert(R.drawable.fish3, 2, 25),
+        Dessert(R.drawable.fish4, 6, 35),
+        Dessert(R.drawable.fish5, 3, 45),
+        Dessert(R.drawable.fish6, 7, 55),
+        Dessert(R.drawable.fish7, 5, 65),
+        Dessert(R.drawable.fish8, 9, 75),
+        Dessert(R.drawable.fish9, 4, 85),
+        Dessert(R.drawable.fish10, 7, 95),
+        Dessert(R.drawable.fish11, 5, 105),
+        Dessert(R.drawable.fish11, 4, 120),
+        Dessert(R.drawable.fish12, 1, 135)
     )
     private var currentFish = allFishes[0]
 
@@ -55,8 +62,8 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         if (savedInstanceState != null) {
             // Get all the game state information from the bundle, set it
             revenue = savedInstanceState.getInt(KEY_REVENUE, 0)
-            fishGeted = savedInstanceState.getInt(KEY_DESSERT_SOLD, 0)
-            timer.secondsCount = savedInstanceState.getInt(KEY_TIMER_SECONDS, 0)
+            fishGeted = savedInstanceState.getInt(KEY_FISHES, 0)
+            timer.secondsCount = savedInstanceState.getInt(KEY_TIMER_SECONDS, 30)
             showCurrentFish()
 
         }
@@ -64,11 +71,12 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         binding.revenue = revenue
         binding.amountFishes = fishGeted
         binding.fish.setImageResource(currentFish.imageId)
+
+  //      binding.timerCount.setText(timer.secondsCount)
     }
 
 
     private fun onFishClicked() {
-
         revenue += currentFish.price
         fishGeted++
         binding.revenue = revenue
@@ -82,25 +90,47 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         for (fishes in allFishes) {
             if (fishGeted >= fishes.startProductionAmount) {
                 newFish = fishes
-            }
-            else break
+            } else break
         }
         if (newFish != currentFish) {
             currentFish = newFish
             binding.fish.setImageResource(newFish.imageId)
         }
+        val animation = AnimationUtils.loadAnimation(this, R.anim.changing)
+        binding.fish.startAnimation(animation)
     }
+
+    private fun locateView(v: View?): Rect? {
+        val loc_int = IntArray(2)
+        if (v == null) return null
+        try {
+            v!!.getLocationOnScreen(loc_int)
+        } catch (npe: NullPointerException) {
+            //Happens when the view doesn't exist on screen anymore.
+            return null
+        }
+
+        val location = Rect()
+        location.left = loc_int[0]
+        location.top = loc_int[1]
+        location.right = location.left + v!!.width
+        location.bottom = location.top + v!!.height
+        return location
+    }
+
 
     private fun onShare() {
         val shareIntent = ShareCompat.IntentBuilder.from(this)
-                .setText(getString(R.string.share_text, fishGeted, revenue))
-                .setType("text/plain")
-                .intent
+            .setText(getString(R.string.share_text, fishGeted, revenue))
+            .setType("text/plain")
+            .intent
         try {
             startActivity(shareIntent)
         } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(this, getString(R.string.sharing_not_available),
-                    Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this, getString(R.string.sharing_not_available),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -116,10 +146,9 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         return super.onOptionsItemSelected(item)
     }
 
-
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putInt(KEY_REVENUE, revenue)
-        outState.putInt(KEY_DESSERT_SOLD, fishGeted)
+        outState.putInt(KEY_FISHES, fishGeted)
         outState.putInt(KEY_TIMER_SECONDS, timer.secondsCount)
         Timber.i("onSaveInstanceState Called")
         super.onSaveInstanceState(outState)
