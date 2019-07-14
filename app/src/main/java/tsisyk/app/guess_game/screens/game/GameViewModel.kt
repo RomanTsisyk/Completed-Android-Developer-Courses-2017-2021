@@ -1,36 +1,93 @@
 package tsisyk.app.guess_game.screens.game
 
+import android.os.CountDownTimer
+import android.text.format.DateUtils
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import timber.log.Timber
-import kotlin.collections.mutableListOf as mutableListOf1
+
+private val CORRECT_BUZZ_PATTERN = longArrayOf(100, 100, 100, 100, 100, 100)
+private val PANIC_BUZZ_PATTERN = longArrayOf(0, 200)
+private val GAME_OVER_BUZZ_PATTERN = longArrayOf(0, 2000)
+private val NO_BUZZ_PATTERN = longArrayOf(0)
+
 
 class GameViewModel : ViewModel() {
 
-    // The current word
-    var word = ""
+    enum class BuzzType(val pattern: LongArray) {
+        CORRECT(CORRECT_BUZZ_PATTERN),
+        GAME_OVER(GAME_OVER_BUZZ_PATTERN),
+        COUNTDOWN_PANIC(PANIC_BUZZ_PATTERN),
+        NO_BUZZ(NO_BUZZ_PATTERN)
+    }
 
-    // The current score
-    var score = 0
+    companion object {
+        private const val DONE = 0L
+        private const val COUNTDOWN_PANIC_SECONDS = 10L
+        private const val ONE_SECOND = 1000L
+        private const val COUNTDOWN_TIME = 60000L
 
-    // The list of words - the front of the list is the next word to guess
+    }
+
+    private val timer: CountDownTimer
+
+    private val _currentTime = MutableLiveData<Long>()
+    private val currentTime: LiveData<Long>
+        get() = _currentTime
+
+    val currentTimeString: LiveData<String> = Transformations.map(currentTime) { time ->
+        DateUtils.formatElapsedTime(time)
+    }
+
+    private val _word = MutableLiveData<String>()
+    val word: LiveData<String>
+        get() = _word
+
+
+    private val _score = MutableLiveData<Int>()
+    val score: LiveData<Int>
+        get() = _score
+
+
     private lateinit var wordList: MutableList<String>
+
+    private val _eventGameFinish = MutableLiveData<Boolean>()
+    val eventGameFinish: LiveData<Boolean>
+        get() = _eventGameFinish
+
+    private val _eventBuzz = MutableLiveData<BuzzType>()
+    val eventBuzz: LiveData<BuzzType>
+        get() = _eventBuzz
 
     init {
         resetList()
         nextWord()
-    }
+        _score.value = 0
 
-    override fun onCleared() {
-        super.onCleared()
-        Timber.plant(Timber.DebugTree())
+        timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
+
+            override fun onTick(millisUntilFinished: Long) {
+                _currentTime.value = (millisUntilFinished / ONE_SECOND)
+                if (millisUntilFinished / ONE_SECOND <= COUNTDOWN_PANIC_SECONDS) {
+                    _eventBuzz.value = BuzzType.COUNTDOWN_PANIC
+                }
+            }
+
+            override fun onFinish() {
+                _currentTime.value = DONE
+                _eventBuzz.value = BuzzType.GAME_OVER
+                _eventGameFinish.value = true
+            }
+        }
+
+        timer.start()
     }
 
     private fun resetList() {
-        wordList = mutableListOf1(
-
-
+        wordList = mutableListOf(
             "The Godfather",
-            "The Shawshank Redemption<",
+            "The Shawshank Redemption< ",
             "Pulp Fiction",
             "Star Wars",
             "The Dark Knight",
@@ -50,53 +107,41 @@ class GameViewModel : ViewModel() {
             "Jurassic Park",
             "Terminator",
             "Rocky "
-            /*    getString(R.string.item1),
-                getString(R.string.item2),
-                getString(R.string.item3),
-                getString(R.string.item4),
-                getString(R.string.item5),
-                getString(R.string.item6),
-                getString(R.string.item7),
-                getString(R.string.item8),
-                getString(R.string.item9),
-                getString(R.string.item10),
-                getString(R.string.item11),
-                getString(R.string.item12),
-                getString(R.string.item13),
-                getString(R.string.item14),
-                getString(R.string.item15),
-                getString(R.string.item16),
-                getString(R.string.item17),
-                getString(R.string.item18),
-                getString(R.string.item19),
-                getString(R.string.item20),
-                getString(R.string.item21)*/
         )
         wordList.shuffle()
     }
 
-
-    /**
-     * Moves to the next word in the list
-     */
     private fun nextWord() {
         //Select and remove a word from the list
         if (wordList.isEmpty()) {
-            //       gameFinished()
-        } else {
-            word = wordList.removeAt(0)
+            resetList()
         }
+        _word.value = wordList.removeAt(0)
     }
 
 
     fun onSkip() {
-        score--
+        _score.value = (_score.value)?.minus(1)
         nextWord()
     }
 
     fun onCorrect() {
-        score++
+        _score.value = (_score.value)?.plus(1)
+        _eventBuzz.value = BuzzType.CORRECT
         nextWord()
     }
 
+
+    fun onGameFinishComplete() {
+        _eventGameFinish.value = false
+    }
+
+    fun onBuzzComplete() {
+        _eventBuzz.value = BuzzType.NO_BUZZ
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        timer.cancel()
+    }
 }
