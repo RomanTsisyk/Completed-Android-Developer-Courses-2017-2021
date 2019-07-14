@@ -17,7 +17,6 @@ class TimeTrackerFragment : Fragment() {
 
         val binding: FragmentTimeTrackerBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_time_tracker, container, false)
-
         return binding.root
     }
 }
