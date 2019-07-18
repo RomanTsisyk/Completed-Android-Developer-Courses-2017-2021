@@ -11,6 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_layout"
+        android:background="#BBABAB"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".screens.game.GameFragment">
@@ -19,30 +20,29 @@
             android:id="@+id/word_is_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="64dp"
             android:fontFamily="sans-serif"
             android:text="@string/word_is"
-            android:textColor="@color/black_text_color"
-            android:textSize="14sp"
-            android:textStyle="normal"
+            style="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintBottom_toTopOf="@+id/word_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.499"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.26999998"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/word_text"
+            android:textColor="@color/text_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:fontFamily="sans-serif"
             android:text="@{@string/quote_format(gameViewModel.word)}"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/black_text_color"
-            android:textSize="34sp"
-            android:textStyle="normal"
+            style="@style/TextAppearance.AppCompat.Display2"
+
             app:layout_constraintBottom_toTopOf="@+id/score_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -60,12 +60,12 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
             android:text="@{gameViewModel.currentTimeString}"
-            android:textColor="@color/grey_text_color"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/score_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/skip_button"
             tools:text="0:00" />
 
         <TextView
@@ -76,8 +76,7 @@
             android:layout_marginEnd="8dp"
             android:fontFamily="sans-serif"
             android:text="@{@string/score_format(gameViewModel.score)}"
-            android:textColor="@color/grey_text_color"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="normal"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,37 +85,41 @@
 
         <Button
             android:id="@+id/skip_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/dislike"
             android:onClick="@{() -> gameViewModel.onSkip()}"
-            android:text="@string/skip"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/correct_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@+id/word_text"
+            app:layout_constraintVertical_bias="0.53" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="96dp" />
+            app:layout_constraintGuide_end="82dp" />
 
         <Button
             android:id="@+id/correct_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="86dp"
+            android:background="@drawable/like"
             android:onClick="@{() -> gameViewModel.onCorrect()}"
-            android:text="@string/got_it"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/skip_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/skip_button"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toTopOf="@+id/skip_button" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
