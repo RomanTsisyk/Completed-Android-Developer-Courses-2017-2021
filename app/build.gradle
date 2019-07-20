@@ -8,7 +8,7 @@ apply plugin: 'androidx.navigation.safeargs'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "tsisyk.app.wctime"
+        applicationId "tsisyk.app.trackmysleepquality"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
