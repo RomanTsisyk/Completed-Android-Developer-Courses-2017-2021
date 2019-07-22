@@ -1,10 +1,9 @@
-package tsisyk.app.trackmysleepquality.sleeptracker
+package tsisyk.app.babysleeptracker.sleeptracker
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import tsisyk.app.trackmysleepquality.database.SleepDatabaseDao
-
+import tsisyk.app.babysleeptracker.database.SleepDatabaseDao
 
 class SleepTrackerViewModelFactory(
         private val dataSource: SleepDatabaseDao,

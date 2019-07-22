@@ -1,4 +1,4 @@
-package tsisyk.app.trackmysleepquality
+package tsisyk.app.babysleeptracker
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
