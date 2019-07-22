@@ -6,11 +6,9 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import tsisyk.app.babysleeptracker.database.SleepNight as SleepNight1
-
+@Dao
 interface SleepDatabaseDao{
 
-    @Dao
-    interface SleepDatabaseDao {}
 
     @Insert
     fun insert(night: SleepNight1)
