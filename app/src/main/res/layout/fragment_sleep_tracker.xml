@@ -6,6 +6,9 @@
 
 
     <data>
+        <variable
+            name="sleepTrackerViewModel"
+            type="tsisyk.app.babysleeptracker.sleeptracker.SleepTrackerViewModel" />
 
     </data>
 
