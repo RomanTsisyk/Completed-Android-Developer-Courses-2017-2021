@@ -2,10 +2,8 @@ package tsisyk.app.babysleeptracker.sleeptracker
 
 import android.app.Application
 import android.text.Spanned
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import android.view.View
+import androidx.lifecycle.*
 import androidx.room.Insert
 import kotlinx.coroutines.*
 import tsisyk.app.babysleeptracker.database.SleepDatabaseDao
@@ -78,6 +76,8 @@ class SleepTrackerViewModel(
         uiScope.launch {
             clear()
             tonight.value = null
+            _showSnackbarEvent.value = true
+
         }
     }
 
@@ -106,6 +106,26 @@ class SleepTrackerViewModel(
     }!!
 
 
+    val startButtonVisible = Transformations.map(tonight) {
+        null == it
+    }!!
+
+    val stopButtonVisible = Transformations.map(tonight) {
+        null != it
+    }!!
+
+    val clearButtonVisible = Transformations.map(nights) {
+        it?.isNotEmpty()
+    }!!
+
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+
+    val showSnackBarEvent: LiveData<Boolean>
+        get() = _showSnackbarEvent
+
+    fun doneShowingSnackbar() {
+        _showSnackbarEvent.value = false
+    }
 }
 
 
