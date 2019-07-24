@@ -11,12 +11,6 @@
     <string name="stop">Stop</string>
     <string name="clear">Clear</string>
 
-    <!-- contentDescription strings for quality icons -->
-    <string name="quality_0">Sleep Well</string>
-    <string name="quality_1">Cry</string>
-    <string name="quality_2">Pi - Pi</string>
-    <string name="quality_3">Hungry</string>
-
     <!-- Output to TextView styled with a little HTML -->
     <string name="title"><![CDATA[<h3>HERE IS YOUR SLEEP DATA</h3>]]></string>
     <string name="start_time"><![CDATA[<b>Start:</b>]]></string>

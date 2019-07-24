@@ -1,5 +1,6 @@
 package tsisyk.app.babysleeptracker
 
+import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.os.Build
 import android.text.Html
@@ -17,16 +18,18 @@ private val ONE_MINUTE_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.MINUTE
 private val ONE_HOUR_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 
 fun convertNumericQualityToString(quality: Int, resources: Resources): String {
-    var qualityString = resources.getString(R.string.sleep_well)
+    var qualityString = resources.getString(R.string.sleep_and_cry)
     when (quality) {
-        -1 -> qualityString = resources.getString(R.string.sleep_well)
-        0 -> qualityString = resources.getString(R.string.sleep_and_cry)
-        1 -> qualityString = resources.getString(R.string.pampers)
-        2 -> qualityString = resources.getString(R.string.wanna_eat_or_drink)
+        -1 -> qualityString = resources.getString(R.string.how_was_hour_sleep)
+        0 -> qualityString = resources.getString(R.string.sleep_well)
+        1 -> qualityString = resources.getString(R.string.sleep_and_cry)   ///
+        2 -> qualityString = resources.getString(R.string.pampers)
+        3 -> qualityString =  resources.getString(R.string.wanna_eat_or_drink)
     }
     return qualityString
 }
 
+@SuppressLint("SimpleDateFormat")
 fun convertLongToDateString(systemTime: Long): String {
     return SimpleDateFormat("EEEE MMM-dd-yyyy' Time: 'HH:mm")
         .format(systemTime).toString()

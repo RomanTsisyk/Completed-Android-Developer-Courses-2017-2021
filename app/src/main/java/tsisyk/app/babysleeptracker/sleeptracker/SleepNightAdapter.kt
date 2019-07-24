@@ -49,7 +49,7 @@ class SleepNightAdapter : RecyclerView.Adapter<SleepNightAdapter.ViewHolder>() {
                     1 -> R.drawable.cry_baby
                     2 -> R.drawable.diaper
                     3 -> R.drawable.feeding_bottle
-                    else -> R.drawable.baby
+                    else -> R.drawable.sand_clock
                 }
             )
         }

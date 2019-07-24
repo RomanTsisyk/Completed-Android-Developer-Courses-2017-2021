@@ -1,10 +1,7 @@
 package tsisyk.app.babysleeptracker.sleeptracker
 
 import android.app.Application
-import android.text.Spanned
-import android.view.View
 import androidx.lifecycle.*
-import androidx.room.Insert
 import kotlinx.coroutines.*
 import tsisyk.app.babysleeptracker.database.SleepDatabaseDao
 import tsisyk.app.babysleeptracker.database.SleepNight
@@ -41,13 +38,11 @@ class SleepTrackerViewModel(
         scopeInitTonight()
     }
 
-
     fun scopeInitTonight() {
         uiScope.launch {
             tonight.value = getTonightFromDatabase()
         }
     }
-
 
     override fun onCleared() {
         super.onCleared()
@@ -59,6 +54,8 @@ class SleepTrackerViewModel(
             val newNight = SleepNight()
             insert(newNight)
             tonight.value = getTonightFromDatabase()
+            startButton_showSnackbarEvent.value = true
+
         }
     }
 
@@ -76,12 +73,10 @@ class SleepTrackerViewModel(
         uiScope.launch {
             clear()
             tonight.value = null
-            _showSnackbarEvent.value = true
+            clearButton_showSnackbarEvent.value = true
 
         }
     }
-
-
 
     private suspend fun insert(night: SleepNight){
         withContext(Dispatchers.IO) {
@@ -118,13 +113,26 @@ class SleepTrackerViewModel(
         it?.isNotEmpty()
     }!!
 
-    private var _showSnackbarEvent = MutableLiveData<Boolean>()
+    /// Clear button
 
-    val showSnackBarEvent: LiveData<Boolean>
-        get() = _showSnackbarEvent
+    private var clearButton_showSnackbarEvent = MutableLiveData<Boolean>()
+
+    val showSnackBarEventClearButtonClicked: LiveData<Boolean>
+        get() = clearButton_showSnackbarEvent
 
     fun doneShowingSnackbar() {
-        _showSnackbarEvent.value = false
+        clearButton_showSnackbarEvent.value = false
+    }
+
+    /// Start button
+
+    private var startButton_showSnackbarEvent = MutableLiveData<Boolean>()
+
+    val showSnackBarEventStartbuttonClicked: LiveData<Boolean>
+        get() = startButton_showSnackbarEvent
+
+    fun doneShowingSnackbar2() {
+        clearButton_showSnackbarEvent.value = false
     }
 }
 

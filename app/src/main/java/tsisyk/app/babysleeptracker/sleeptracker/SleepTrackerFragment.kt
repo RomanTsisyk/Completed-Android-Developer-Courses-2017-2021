@@ -28,16 +28,12 @@ class SleepTrackerFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
-
         val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
-
         val sleepTrackerViewModel = ViewModelProviders.of(
-            this, viewModelFactory
-        ).get(SleepTrackerViewModel::class.java)
+            this, viewModelFactory ).get(SleepTrackerViewModel::class.java)
 
         binding.sleepTrackerViewModel = sleepTrackerViewModel
         binding.lifecycleOwner = this
-
 
         sleepTrackerViewModel.navigateToSleepQuality.observe(this, Observer {
                 night ->
@@ -49,7 +45,7 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
-        sleepTrackerViewModel.showSnackBarEvent.observe(this, Observer {
+        sleepTrackerViewModel.showSnackBarEventClearButtonClicked.observe(this, Observer {
             if (it == true) { // Observed state is true.
                 Snackbar.make(
                     activity!!.findViewById(android.R.id.content),
@@ -58,7 +54,17 @@ class SleepTrackerFragment : Fragment() {
                 ).show()
                 sleepTrackerViewModel.doneShowingSnackbar()
             }
+        })
 
+        sleepTrackerViewModel.showSnackBarEventStartbuttonClicked.observe(this, Observer {
+            if (it == true) { // Observed state is true.
+                Snackbar.make(
+                    activity!!.findViewById(android.R.id.content),
+                    getString(R.string.start),
+                    Snackbar.LENGTH_SHORT // How long to display the message.
+                ).show()
+                sleepTrackerViewModel.doneShowingSnackbar2()
+            }
         })
 
         val adapter = SleepNightAdapter()
@@ -68,7 +74,6 @@ class SleepTrackerFragment : Fragment() {
                 adapter.data = it
             }
         })
-
         return binding.root
     }
 }
