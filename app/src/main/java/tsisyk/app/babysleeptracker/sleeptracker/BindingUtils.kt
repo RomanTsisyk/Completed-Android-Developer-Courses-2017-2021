@@ -24,14 +24,16 @@ fun TextView.setSleepQualityString(item: SleepNight?) {
 }
 
 @BindingAdapter("sleepImage")
-fun ImageView.setSleepImage(item: SleepNight) {
-    setImageResource(
-        when (item.sleepQuality) {
-            0 -> R.drawable.baby
-            1 -> R.drawable.cry_baby
-            2 -> R.drawable.diaper
-            3 -> R.drawable.feeding_bottle
-            else -> R.drawable.sand_clock
-        }
-    )
+fun ImageView.setSleepImage(item: SleepNight?) {
+    item?.let {
+        setImageResource(
+            when (item.sleepQuality) {
+                0 -> R.drawable.baby
+                1 -> R.drawable.cry_baby
+                2 -> R.drawable.diaper
+                3 -> R.drawable.feeding_bottle
+                else -> R.drawable.sand_clock
+            }
+        )
+    }
 }

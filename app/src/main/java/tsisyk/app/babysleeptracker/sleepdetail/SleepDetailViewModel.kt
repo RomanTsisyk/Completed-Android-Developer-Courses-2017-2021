@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.room.Query
 import tsisyk.app.babysleeptracker.database.SleepDatabaseDao
 import tsisyk.app.babysleeptracker.database.SleepNight
 import kotlinx.coroutines.Job
@@ -18,9 +19,9 @@ class SleepDetailViewModel(
 
     fun getNight() = night
 
- /*   init {
+    init {
         night.addSource(database.getNightWithId(sleepNightKey), night::setValue)
-    }*/
+    }
 
     private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
 
@@ -39,5 +40,6 @@ class SleepDetailViewModel(
     fun onClose() {
         _navigateToSleepTracker.value = true
     }
+
 
 }
