@@ -15,7 +15,7 @@
         <item name="colorControlHighlight">@color/green_color</item>
         <item name="android:textStyle">bold</item>
     </style>
-
+<!--
 
     <style name="Theme1">
         <item name="textColor">@color/green_apple</item>
@@ -27,6 +27,6 @@
         <item name="textColor">@color/sky_blue</item>
         <item name="background">#ffffff</item>
         <item name="textSize">35sp</item>
-    </style>
+    </style>-->
 
 </resources>

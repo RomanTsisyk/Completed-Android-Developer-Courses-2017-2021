@@ -10,7 +10,7 @@ import android.preference.PreferenceActivity
 
 class ThemePreferenceActivity : PreferenceActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+ /*   override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.preferences)
         findPreference("theme").onPreferenceChangeListener =
@@ -28,5 +28,5 @@ class ThemePreferenceActivity : PreferenceActivity() {
 
     companion object {
         const val RESULT_CODE_THEME_UPDATED = 1
-    }
+    }*/
 }
