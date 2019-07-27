@@ -11,6 +11,7 @@
     <string name="word_is">The movie is…</string>
     <string name="quote_format">\"%s\"</string>
     <string name="score_format">Current Score: %d</string>
+
     <string name="item1">The Godfather</string>
     <string name="item2">The Shawshank Redemption</string>
     <string name="item3">Pulp Fiction</string>
@@ -33,4 +34,5 @@
     <string name="item20">Terminator</string>
     <string name="item21">Rocky</string>
     <string name="csd">lkjvskj</string>
+    <string name="hohi">The Godfather</string>
 </resources>

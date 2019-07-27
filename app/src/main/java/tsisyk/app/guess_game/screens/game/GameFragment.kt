@@ -13,18 +13,19 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.NavHostFragment.findNavController
-import timber.log.Timber
 import tsisyk.app.guess_game.R
 import tsisyk.app.guess_game.databinding.GameFragmentBinding
 
+@Suppress("DEPRECATION")
 class GameFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
-
     private lateinit var binding: GameFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -35,7 +36,7 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         viewModel.eventGameFinish.observe(this, Observer { isFinished ->
             if (isFinished) {
                 val currentScore = viewModel.score.value ?: 0
@@ -65,4 +66,68 @@ class GameFragment : Fragment() {
             }
         }
     }
+
+    fun mutableList(): MutableList<String> =
+        mutableListOf("The Godfather", "The Shawshank Redemption", "Pulp Fiction", "Star Wars", "The Dark Knight", "GoodFellas", "The Matrix ", "Schindler\'s List", "Indiana Jones", "Fight Club", "Saving Private Ryan", "Back to the Future", "Gladiator", "The Lord of the Rings", "Braveheart", "Inception", "Jaws ", "Titanic", "Jurassic Park", "Terminator", "Rocky ", "Akira", "Underground", "The Big Sleep", "The Graduate", "The Hustler", "Anatomy of a Murder", "Before Sunset", "X-Men", "Papillon", "Beauty and the Beast", "The Night of the Hunter", "Roman Holiday", "Castle in the Sky", "Notorious", "Pirates of the Caribbean", "A Fistful of Dollars", "Yip Man", "The Imitation Game", "The King's Speech", "Dog Day Afternoon", "Barry Lyndon", "The Truman Show", "Throne of Blood", "Harry Potter", "Monsters, Inc", "Guardians of the Galaxy", "Memories of Murder\n", "Groundhog Day\n", "The Battle of Algiers", "Goodfellas", "12 Angry Men", "Léon: The Professional", "Once Upon a Time in the West", "The Pianist", "The Green Mile")
+
+    /* fun mutableList() =
+        mutableListOf(
+            "The Godfather",
+            "The Shawshank Redemption",
+            "Pulp Fiction",
+            "Star Wars",
+            "The Dark Knight",
+            "GoodFellas",
+            "The Matrix ",
+            "Schindler\'s List",
+            "Indiana Jones",
+            "Fight Club",
+            "Saving Private Ryan",
+            "Back to the Future",
+            "Gladiator",
+            "The Lord of the Rings",
+            "Braveheart",
+            "Inception",
+            "Jaws ",
+            "Titanic",
+            "Jurassic Park",
+            "Terminator",
+            "Rocky ",
+            "Akira",
+            "Underground",
+            "The Big Sleep",
+            "The Graduate",
+            "The Hustler",
+            "Anatomy of a Murder",
+            "Before Sunset",
+            "X-Men",
+            "Papillon",
+            "Beauty and the Beast",
+            "The Night of the Hunter",
+            "Roman Holiday",
+            "Castle in the Sky",
+            "Notorious",
+            "Pirates of the Caribbean",
+            "A Fistful of Dollars",
+            "Yip Man",
+            "The Imitation Game",
+            "The King's Speech",
+            "Dog Day Afternoon",
+            "Barry Lyndon",
+            "The Truman Show",
+            "Throne of Blood",
+            "Harry Potter",
+            "Monsters, Inc",
+            "Guardians of the Galaxy",
+            "Memories of Murder\n",
+            "Groundhog Day\n",
+            "The Battle of Algiers",
+            "Goodfellas",
+            "12 Angry Men",
+            "Léon: The Professional",
+            "Once Upon a Time in the West",
+            "The Pianist",
+            "The Green Mile"
+        )
+*/
 }

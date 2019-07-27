@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import java.util.*
+import kotlin.collections.mutableListOf as mutableListOf1
+
 
 private val CORRECT_BUZZ_PATTERN = longArrayOf(100, 100, 100, 100, 100, 100)
 private val PANIC_BUZZ_PATTERN = longArrayOf(0, 200)
@@ -27,11 +30,9 @@ class GameViewModel : ViewModel() {
         private const val COUNTDOWN_PANIC_SECONDS = 10L
         private const val ONE_SECOND = 1000L
         private const val COUNTDOWN_TIME = 60000L
-
     }
 
     private val timer: CountDownTimer
-
     private val _currentTime = MutableLiveData<Long>()
     private val currentTime: LiveData<Long>
         get() = _currentTime
@@ -85,64 +86,17 @@ class GameViewModel : ViewModel() {
     }
 
     private fun resetList() {
-        wordList = mutableListOf(
-            "The Godfather",
-            "The Shawshank Redemption",
-            "Pulp Fiction",
-            "Star Wars",
-            "The Dark Knight",
-            "GoodFellas",
-            "The Matrix ",
-            "Schindler\'s List",
-            "Indiana Jones",
-            "Fight Club",
-            "Saving Private Ryan",
-            "Back to the Future",
-            "Gladiator",
-            "The Lord of the Rings",
-            "Braveheart",
-            "Inception",
-            "Jaws ",
-            "Titanic",
-            "Jurassic Park",
-            "Terminator",
-            "Rocky ",
-            "Akira",
-            "Underground",
-            "The Big Sleep",
-            "The Graduate",
-            "The Hustler",
-            "Anatomy of a Murder",
-            "Before Sunset",
-            "X-Men",
-            "Papillon",
-            "Beauty and the Beast",
-            "The Night of the Hunter",
-            "Roman Holiday",
-            "Castle in the Sky",
-            "Notorious",
-            "Pirates of the Caribbean",
-            "A Fistful of Dollars",
-            "Yip Man",
-            "The Imitation Game",
-            "The King's Speech",
-            "Dog Day Afternoon",
-            "Barry Lyndon",
-            "The Truman Show",
-            "Throne of Blood",
-            "Harry Potter",
-            "Monsters, Inc",
-            "Guardians of the Galaxy",
-            "Memories of Murder\n",
-            "Groundhog Day\n",
-            "The Battle of Algiers",
-            "Goodfellas",
-            "12 Angry Men",
-            "Léon: The Professional",
-            "Once Upon a Time in the West",
-            "The Pianist",
-            "The Green Mile"
-        )
+
+        val isLang = Locale.getDefault().language
+
+        wordList = when (isLang) {
+            "en" -> mutableListEN
+           "es" -> mutableListES
+         /*    "de" -> mutableListDE
+            "cz" -> mutableListCZ
+            "ua" -> mutableListUA*/
+            else -> mutableListEN
+        }
         wordList.shuffle()
     }
 
@@ -154,7 +108,6 @@ class GameViewModel : ViewModel() {
         _word.value = wordList.removeAt(0)
     }
 
-
     fun onSkip() {
         _score.value = (_score.value)?.minus(1)
         nextWord()
@@ -165,7 +118,6 @@ class GameViewModel : ViewModel() {
         _eventBuzz.value = BuzzType.CORRECT
         nextWord()
     }
-
 
     fun onGameFinishComplete() {
         _eventGameFinish.value = false
@@ -179,4 +131,13 @@ class GameViewModel : ViewModel() {
         super.onCleared()
         timer.cancel()
     }
+
+    private val mutableListEN: MutableList<String>
+        get() = mutableListOf1("The Godfather", "The Shawshank Redemption", "Pulp Fiction", "Star Wars", "The Dark Knight", "GoodFellas", "The Matrix ", "Schindler\'s List", "Indiana Jones", "Fight Club", "Saving Private Ryan", "Back to the Future", "Gladiator", "The Lord of the Rings", "Braveheart", "Inception", "Jaws ", "Titanic", "Jurassic Park", "Terminator", "Rocky ", "Akira", "Underground", "The Big Sleep", "The Graduate", "The Hustler", "Anatomy of a Murder", "Before Sunset", "X-Men", "Papillon", "Beauty and the Beast", "The Night of the Hunter", "Roman Holiday", "Castle in the Sky", "Notorious", "Pirates of the Caribbean", "A Fistful of Dollars", "Yip Man", "The Imitation Game", "The King's Speech", "Dog Day Afternoon", "Barry Lyndon", "The Truman Show", "Throne of Blood", "Harry Potter", "Monsters, Inc", "Guardians of the Galaxy", "Memories of Murder", "Groundhog Day", "The Battle of Algiers", "Goodfellas", "12 Angry Men", "Léon: The Professional", "Once Upon a Time in the West", "The Pianist", "The Green Mile")
+
+    private val mutableListES: MutableList<String>
+    get() = mutableListOf1("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre")
 }
+
+
+

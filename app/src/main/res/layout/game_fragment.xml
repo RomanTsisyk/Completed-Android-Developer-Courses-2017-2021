@@ -11,53 +11,47 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_layout"
-        android:background="#BBABAB"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#ffb2ff"
         tools:context=".screens.game.GameFragment">
 
         <TextView
             android:id="@+id/word_is_text"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
             android:fontFamily="sans-serif"
             android:text="@string/word_is"
-            style="@style/TextAppearance.AppCompat.Display1"
             app:layout_constraintBottom_toTopOf="@+id/word_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.499"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.26999998"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/word_text"
-            android:textColor="@color/text_color"
-            android:layout_width="wrap_content"
+            style="@style/TextAppearance.AppCompat.Display2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@android:dimen/notification_large_icon_height"
+            android:layout_marginEnd="@android:dimen/notification_large_icon_height"
+            android:layout_marginBottom="@android:dimen/notification_large_icon_width"
             android:animateLayoutChanges="true"
             android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
             android:text="@{@string/quote_format(gameViewModel.word)}"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            style="@style/TextAppearance.AppCompat.Display2"
-
-            app:layout_constraintBottom_toTopOf="@+id/score_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/text_color"
+            app:layout_constraintBottom_toTopOf="@+id/timer_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/word_is_text"
-            app:layout_constraintVertical_chainStyle="packed"
             tools:text="&quot;Tuna&quot;" />
 
         <TextView
             android:id="@+id/timer_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif"
             android:text="@{gameViewModel.currentTimeString}"
             android:textSize="20sp"
@@ -65,22 +59,22 @@
             app:layout_constraintBottom_toTopOf="@+id/score_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/skip_button"
+            app:layout_constraintTop_toBottomOf="@+id/word_text"
             tools:text="0:00" />
 
         <TextView
             android:id="@+id/score_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="@android:dimen/notification_large_icon_width"
             android:fontFamily="sans-serif"
             android:text="@{@string/score_format(gameViewModel.score)}"
             android:textSize="20sp"
             android:textStyle="normal"
-            app:layout_constraintBottom_toTopOf="@+id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/timer_text"
+            app:layout_constraintStart_toStartOf="@+id/timer_text"
+            app:layout_constraintTop_toBottomOf="@+id/timer_text"
             tools:text="Score: 2" />
 
         <Button
@@ -89,6 +83,7 @@
             android:layout_height="128dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
+            android:layout_marginBottom="@android:dimen/notification_large_icon_height"
             android:background="@drawable/dislike"
             android:onClick="@{() -> gameViewModel.onSkip()}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -98,13 +93,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/word_text"
             app:layout_constraintVertical_bias="0.53" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_end="82dp" />
 
         <Button
             android:id="@+id/correct_button"
