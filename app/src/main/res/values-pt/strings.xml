@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Adivinha o filme</string>
+    <string name="get_ready">Fique pronto para</string>
+    <string name="got_it">Consegui</string>
+    <string name="play_again">Jogar de novo</string>
+    <string name="play_button">Jogar</string>
+    <string name="score_format">Pontuação:%d</string>
+    <string name="skip">Pular</string>
+    <string name="title_text">Adivinha o filme!</string>
+    <string name="word_is">O filme é…</string>
+    <string name="you_scored">Você pontuou</string>
+</resources>

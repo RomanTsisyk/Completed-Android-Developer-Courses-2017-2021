@@ -1,0 +1,5 @@
+<root>
+    <item name='androidx.annotation.DrawableRes'>
+        <annotation name='java.lang.Deprecated' />
+    </item>
+</root>

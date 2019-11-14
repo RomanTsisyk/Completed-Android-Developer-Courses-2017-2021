@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zgadnij film</string>
+    <string name="get_ready">Przygotuj się na</string>
+    <string name="got_it">Rozumiem</string>
+    <string name="play_again">Zagraj ponownie</string>
+    <string name="play_button">Grać</string>
+    <string name="score_format">Wynik: %d</string>
+    <string name="skip">Pominąć</string>
+    <string name="title_text">Zgadnij film!</string>
+    <string name="word_is">Film jest…</string>
+    <string name="you_scored">Ty zdobyłeś</string>
+</resources>

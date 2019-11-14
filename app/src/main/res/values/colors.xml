@@ -24,4 +24,5 @@
     <color name="selected_red_color">#ba000d</color>
     <color name="text_color">#4B6DAA</color>
     <color name="white_text_color">#ffffff</color>
+    <color name="back">#74362424</color>
 </resources>

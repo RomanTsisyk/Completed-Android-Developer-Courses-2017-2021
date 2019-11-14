@@ -9,30 +9,8 @@
     <string name="get_ready">Get ready to</string>
     <string name="got_it">Got it</string>
     <string name="word_is">The movie is…</string>
-    <string name="quote_format">\"%s\"</string>
-    <string name="score_format">Current Score: %d</string>
+    <string name="quote_format" translatable="false">\"%s\"</string>
+    <string name="score_format">Score:\n   %d</string>
 
-    <string name="item1">The Godfather</string>
-    <string name="item2">The Shawshank Redemption</string>
-    <string name="item3">Pulp Fiction</string>
-    <string name="item4">Star Wars</string>
-    <string name="item5">The Dark Knight</string>
-    <string name="item6">GoodFellas</string>
-    <string name="item7">The Matrix</string>
-    <string name="item8">Schindler\'s List</string>
-    <string name="item9">Indiana Jones</string>
-    <string name="item10">Fight Club</string>
-    <string name="item11">Saving Private Ryan</string>
-    <string name="item12">Back to the Future</string>
-    <string name="item13">Gladiator</string>
-    <string name="item14">The Lord of the Rings</string>
-    <string name="item15">Braveheart</string>
-    <string name="item16">Inception</string>
-    <string name="item17">Jaws</string>
-    <string name="item18">Titanic</string>
-    <string name="item19">Jurassic Park</string>
-    <string name="item20">Terminator</string>
-    <string name="item21">Rocky</string>
-    <string name="csd">lkjvskj</string>
-    <string name="hohi">The Godfather</string>
+
 </resources>
