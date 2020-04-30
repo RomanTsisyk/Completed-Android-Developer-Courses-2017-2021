@@ -11,7 +11,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/game_layout"
-        android:background="@drawable/poster_mock"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".screens.game.GameFragment">
@@ -97,7 +97,7 @@
             app:layout_constraintHorizontal_bias="0.47"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@{gameViewModel.image, default =@drawable/poster1}" />
+            app:srcCompat="@{gameViewModel.image}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

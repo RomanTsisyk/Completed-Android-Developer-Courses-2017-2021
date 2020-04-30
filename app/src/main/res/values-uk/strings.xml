@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="get_ready">Приготуйся</string>
     <string name="got_it">Зрозумів</string>
     <string name="app_name">Відгадай фільм</string>
     <string name="play_again">Грати знову</string>
     <string name="play_button">Грати</string>
-    <string name="score_format">Рахунок:%d</string>
+    <string name="score_format">Рахунок:  %d</string>
     <string name="title_text">Вгадайте фільм!</string>
     <string name="skip">Пропустити</string>
     <string name="word_is">Фільм…</string>

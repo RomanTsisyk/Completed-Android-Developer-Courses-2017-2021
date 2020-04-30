@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.example.android.databinding.basicsample.util
+package tsisyk.app.guess_game.util
 
+import android.net.Uri
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingMethod
 import androidx.databinding.BindingMethods
-
 
 
 @BindingMethods(
@@ -29,4 +30,7 @@ import androidx.databinding.BindingMethods
         method = "setImageResource"
     )
 )
+
+
 class MyBindingMethods
+

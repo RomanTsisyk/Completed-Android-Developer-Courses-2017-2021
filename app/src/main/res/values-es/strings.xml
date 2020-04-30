@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Adivina la película</string>
-    <string name="get_ready">Prepárate para</string>
     <string name="got_it">Lo tengo</string>
     <string name="play_again">Juega de nuevo</string>
     <string name="play_button">Jugar</string>
