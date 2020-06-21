@@ -1,10 +1,9 @@
 package com.raywenderlich.android.datadrop.viewmodel
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.raywenderlich.android.datadrop.app.DataDropApplication
 
-class MarkerColorViewModel(application: Application) : AndroidViewModel(application) {
+class MarkerColorViewModel : ViewModel() {
 
     private val markerColorDao = DataDropApplication.database.markerDao()
     private val allMarkerColors = markerColorDao.getAll()

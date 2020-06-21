@@ -1,6 +1,6 @@
 package com.raywenderlich.android.datadrop.ui.droplist
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import com.raywenderlich.android.datadrop.model.Drop
 
 class DropDiffCallback(private val oldDrops: List<Drop>, private val newDrops: List<Drop> ) : DiffUtil.Callback() {

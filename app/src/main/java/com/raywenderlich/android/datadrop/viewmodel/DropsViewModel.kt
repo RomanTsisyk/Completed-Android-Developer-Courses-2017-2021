@@ -1,11 +1,11 @@
 package com.raywenderlich.android.datadrop.viewmodel
 
 import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.raywenderlich.android.datadrop.app.Injection
 import com.raywenderlich.android.datadrop.model.Drop
 
-class DropsViewModel(application: Application) : AndroidViewModel(application) {
+class DropsViewModel() : ViewModel() {
 
     private val repository = Injection.provideDropRepository()
     private val allDrops = repository.getDrops()

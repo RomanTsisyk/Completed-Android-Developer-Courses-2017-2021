@@ -1,14 +1,14 @@
 package com.raywenderlich.android.datadrop.ui.droplist
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.raywenderlich.android.datadrop.R
 import com.raywenderlich.android.datadrop.model.Drop
 import com.raywenderlich.android.datadrop.viewmodel.DropsViewModel
@@ -29,6 +29,7 @@ class DropListActivity : AppCompatActivity(), DropListAdapter.DropListAdapterLis
         listRecyclerView.adapter = adapter
 
         val itemTouchHelper = ItemTouchHelper(ItemTouchHelperCallback(adapter))
+
         itemTouchHelper.attachToRecyclerView(listRecyclerView)
 
         dropsViewModel = ViewModelProviders.of(this).get(DropsViewModel::class.java)

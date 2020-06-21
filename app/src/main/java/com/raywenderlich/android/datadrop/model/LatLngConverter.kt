@@ -1,6 +1,6 @@
 package com.raywenderlich.android.datadrop.model
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.google.android.gms.maps.model.LatLng
 import java.util.*
 

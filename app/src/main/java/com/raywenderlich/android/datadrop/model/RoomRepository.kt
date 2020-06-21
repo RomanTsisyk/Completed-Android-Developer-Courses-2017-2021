@@ -1,6 +1,6 @@
 package com.raywenderlich.android.datadrop.model
 
-import android.arch.lifecycle.LiveData
+import androidx.lifecycle.LiveData
 import android.os.AsyncTask
 import com.raywenderlich.android.datadrop.app.DataDropApplication
 
