@@ -1,8 +1,14 @@
-# My_CV
-test app for Wirpo Poland
+# Saving Data on Android (done)
+Learn various ways to persist data in your app: SharedPreferences, saving data to files, using SQLite, and using the Room library from Google.
 
-<img src="https://github.com/RomanTsisyk/My_CV/blob/master/screenshots/App-Screen-Mockup2.png">
 
-<img src="https://github.com/RomanTsisyk/My_CV/blob/master/screenshots/device-2020-06-21-070412.png"  width="24%"><img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-071143.png"  width="24%"><img src="https://github.com/RomanTsisyk/maphkapp/blob/master/screenshots/device-device-2020-06-21-071200.png"  width="24%"><img src="https://github.com/RomanTsisyk/maphkapp/blob/master/screenshots/device-2020-06-21-071234.png"  width="24%">
-src="https://github.com/RomanTsisyk/maphkapp/blob/master/screenshots/device-2020-06-21-071256"  width="24%">
+# Coroutines With Room Persistence Library (to do )
+I’ll learn how to use coroutines with the Room persistence library to allow for asynchronous database operations.
+
+
+
+<img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/App-Screen-Mockup.png?raw=true">
+
+<img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-070412.png?raw=true"  width="24%"><img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-071143.png?raw=true"  width="24%"><img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-071200.png?raw=true"  width="24%"><img src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-071234.png?raw=true"  width="24%">
+src="https://github.com/RomanTsisyk/map_app/blob/master/screenshots/device-2020-06-21-071256.png?raw=true"  width="24%">
 
