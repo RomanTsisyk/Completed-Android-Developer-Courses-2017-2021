@@ -6,7 +6,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="@android:color/black"
-  tools:context="tsisyk.app.hyspnosisforgoods.StarActivity">
+  tools:context="tsisyk.app.hypnodollar.ui.StarActivity">
 
   <Button
     android:id="@+id/startButton"
@@ -33,9 +33,10 @@
 
 
   <ImageView
-      android:layout_gravity="center"
+      android:id="@+id/image_coin"
       android:layout_width="@dimen/coin_size"
       android:layout_height="@dimen/coin_size"
-      android:background="@drawable/ic_dollar"/>
+      android:layout_gravity="center"
+      android:background="@drawable/ic_dollar" />
 
 </FrameLayout>

@@ -1,7 +1,14 @@
-package tsisyk.app.hyspnosisforgoods
+package tsisyk.app.hypnodollar.ui
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import android.media.Image
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import kotlinx.android.synthetic.main.activity_star.*
+import tsisyk.app.hypnodollar.model.Star
+import tsisyk.app.hypnodollar.model.Vector
+import tsisyk.app.hypnodollar.utils.rand
 import java.util.*
 import kotlin.concurrent.schedule
 import kotlin.math.max
@@ -30,6 +37,7 @@ class StarViewModel : ViewModel() {
 
             starLiveData.postValue(star)
         }
+
     }
 
     fun stopEmittingStars() {

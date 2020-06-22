@@ -1,4 +1,4 @@
-package tsisyk.app.hyspnosisforgoods
+package tsisyk.app.hypnodollar.model
 
 import kotlin.math.sqrt
 
