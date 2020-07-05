@@ -54,5 +54,12 @@ freeline.py
 freeline/
 freeline_project_description.json
 
+<<<<<<< HEAD
 .DS_Store
 .idea
+=======
+# Custom
+
+.DS_Store
+.idea
+>>>>>>> Paging_Libraryt/master
