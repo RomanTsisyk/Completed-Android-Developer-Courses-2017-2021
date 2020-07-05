@@ -1,0 +1,84 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "b99caf748163346827031649ee936b80",
+    "entities": [
+      {
+        "tableName": "drop_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`latLng` TEXT NOT NULL, `dropMessage` TEXT NOT NULL, `id` TEXT NOT NULL, `markerColor` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`markerColor`) REFERENCES `marker_color_table`(`displayString`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "latLng",
+            "columnName": "latLng",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dropMessage",
+            "columnName": "dropMessage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "markerColor",
+            "columnName": "markerColor",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "marker_color_table",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "markerColor"
+            ],
+            "referencedColumns": [
+              "displayString"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "marker_color_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`displayString` TEXT NOT NULL, PRIMARY KEY(`displayString`))",
+        "fields": [
+          {
+            "fieldPath": "displayString",
+            "columnName": "displayString",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "displayString"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b99caf748163346827031649ee936b80')"
+    ]
+  }
+}
