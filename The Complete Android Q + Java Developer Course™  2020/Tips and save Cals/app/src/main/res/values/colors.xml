@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff5722</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#d500f9</color>
+
+
+    <color name="bill_amount_backround">#210037</color>
+
+</resources>
