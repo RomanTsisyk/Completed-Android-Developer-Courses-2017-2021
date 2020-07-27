@@ -1,0 +1,15 @@
+
+<resources>
+    <string name="app_name">Guess the Movie</string>
+    <string name="skip">Skip</string>
+    <string name="play_again">Play Again</string>
+    <string name="you_scored">You Scored</string>
+    <string name="title_text">guess the movie!</string>
+    <string name="play_button">Play</string>
+    <string name="got_it">Got it</string>
+    <string name="word_is">The movie is…</string>
+    <string name="quote_format" translatable="false">\"%s\"</string>
+    <string name="score_format">Score:   %d</string>
+
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Errate den Film</string>
+    <string name="got_it">Ich habs</string>
+    <string name="play_again">Spiel nochmal</string>
+    <string name="play_button">abspielen</string>
+    <string name="score_format">Punktzahl:  %d</string>
+    <string name="skip">Überspringen</string>
+    <string name="title_text">Rate den Film!</string>
+    <string name="word_is">Der Film ist…</string>
+    <string name="you_scored">Du hast gepunktet</string>
+</resources>
