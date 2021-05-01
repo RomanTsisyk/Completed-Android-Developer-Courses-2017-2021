@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+/New codelabs/Jetpack Navigation/app/build
+/New codelabs/Jetpack Navigation/build
+/New codelabs/Jetpack Navigation/.idea
+/New codelabs/Jetpack Navigation/.gradle
